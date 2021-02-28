@@ -3,6 +3,8 @@ package com.synthese.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+
 @Document(collection = "tutorials")
 public class Tutorial {
   @Id
@@ -11,6 +13,7 @@ public class Tutorial {
   private String title;
   private String description;
   private boolean published;
+  private LocalDate date;
 
   public Tutorial() {
 
@@ -20,6 +23,7 @@ public class Tutorial {
     this.title = title;
     this.description = description;
     this.published = published;
+    this.date = LocalDate.now();
   }
 
   public String getId() {
@@ -48,6 +52,14 @@ public class Tutorial {
 
   public void setPublished(boolean isPublished) {
     this.published = isPublished;
+  }
+
+  public LocalDate getDate() {
+    return date;
+  }
+
+  public void setDate(LocalDate date) {
+    this.date = date;
   }
 
   @Override

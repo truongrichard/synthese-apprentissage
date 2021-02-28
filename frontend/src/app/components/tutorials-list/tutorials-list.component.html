@@ -49,6 +49,10 @@
         <label><strong>Status:</strong></label>
         {{ currentTutorial.published ? "Published" : "Pending" }}
       </div>
+      <div>
+        <label><strong>Date:</strong></label>
+        {{ currentTutorial.date }}
+      </div>
 
       <a class="badge badge-warning" routerLink="/tutorials/{{ currentTutorial.id }}">
         Edit

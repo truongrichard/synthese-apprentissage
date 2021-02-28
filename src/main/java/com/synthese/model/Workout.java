@@ -3,24 +3,27 @@ package com.synthese.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "exercises")
-public class Exercise {
+import java.time.LocalDate;
+import java.util.List;
+
+@Document(collection = "workouts")
+public class Workout {
   @Id
   private String id;
 
   private String title;
   private String description;
+  private LocalDate date;
+  private List<ExercisePerformance> exercises;
 
-  private BodyPart bodyPart;
-
-  public Exercise() {
+  public Workout() {
 
   }
 
-  public Exercise(String title, String description, BodyPart bodyPart) {
+  public Workout(String title, String description) {
     this.title = title;
     this.description = description;
-    this.bodyPart = bodyPart;
+    this.date = LocalDate.now();
   }
 
   public String getId() {
@@ -43,20 +46,19 @@ public class Exercise {
     this.description = description;
   }
 
-  public BodyPart getBodyPart() {
-    return bodyPart;
+  public LocalDate getDate() {
+    return date;
   }
 
-  public void setBodyPart(BodyPart bodyPart) {
-    this.bodyPart = bodyPart;
+  public void setDate(LocalDate date) {
+    this.date = date;
   }
 
-  public enum BodyPart {
-    ARM,
-    CHEST,
-    STOMACH,
-    SHOULDER,
-    BACK,
-    LEG
+  public List<ExercisePerformance> getExercises() {
+    return exercises;
+  }
+
+  public void setExercises(List<ExercisePerformance> exercises) {
+    this.exercises = exercises;
   }
 }
