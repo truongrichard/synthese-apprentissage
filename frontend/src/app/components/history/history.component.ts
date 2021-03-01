@@ -42,87 +42,39 @@ export class HistoryComponent implements OnInit {
     viewDate: Date = new Date();
 
     modalData!: {
-      action: string;
+      title: string;
+      description: string;
       event: CalendarEvent;
     };
 
     refresh: Subject<any> = new Subject();
 
     events: CalendarEvent[] = [
-      {
-        start: subDays(startOfDay(new Date()), 1),
-        end: addDays(new Date(), 1),
-        title: 'A 3 day event',
-        color: colors.red,
-        allDay: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-        draggable: true,
-      },
-      {
-        start: startOfDay(new Date()),
-        title: 'An event with no end date',
-        color: colors.yellow,
-      },
-      {
-        start: subDays(endOfMonth(new Date()), 3),
-        end: addDays(endOfMonth(new Date()), 3),
-        title: 'A long event that spans 2 months',
-        color: colors.blue,
-        allDay: true,
-      },
-      {
-        start: addHours(startOfDay(new Date()), 2),
-        end: addHours(new Date(), 2),
-        title: 'A draggable and resizable event',
-        color: colors.yellow,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-        draggable: true,
-      },
+      
     ];
 
     activeDayIsOpen: boolean = true;
 
-    tutorials?: Tutorial[];
+    tutorials: any;
 
     constructor(private modal: NgbModal, private router: Router, private tutorialService: TutorialService) {}
 
-    ngOnInit() {
-      this.retrieveTutorials();
-    }
-  
-    retrieveTutorials() {
-      this.tutorialService.getAll()
-        .subscribe(
+    async ngOnInit() {
+      await this.tutorialService.getAll()
+        .toPromise().then(
           data => {
             this.tutorials = data;
-            this.someBullshit(this.tutorials);
-            console.log(data);
+            this.tutorials.forEach(async (element: Tutorial) => {
+              await this.addEvent(element);
+            });
           },
           error => {
             console.log(error);
           });
+
     }
 
-    someBullshit(tutorials: Tutorial[]){
-      console.log(tutorials);
-      
-      if (tutorials == null) {
-        console.log('Instance is null or undefined');
-      } else {
-          console.log(this.tutorials!);
-          tutorials!.forEach(element => {
-              this.addEvent(element);
-          });
-      }
-    }
-
-    addEvent(element: Tutorial) {
+    async addEvent(element: Tutorial) {
       const offSetUTC = new Date().getTimezoneOffset() * 60000;
   
       let dateString = "" + element.date;
@@ -134,6 +86,9 @@ export class HistoryComponent implements OnInit {
             start: startOfDay(date.getTime() + offSetUTC),
             title: "" + element.title,
             id: "" + element.id,
+            meta: {
+              description: "TESTING"
+            }
           }
       ];
     }
@@ -152,31 +107,17 @@ export class HistoryComponent implements OnInit {
       }
     }
 
-    eventTimesChanged({
-      event,
-      newStart,
-      newEnd,
-    }: CalendarEventTimesChangedEvent): void {
-      this.events = this.events.map((iEvent) => {
-        if (iEvent === event) {
-          return {
-            ...event,
-            start: newStart,
-            end: newEnd,
-          };
-        }
-        return iEvent;
-      });
-      this.handleEvent('Dropped or resized', event);
-    }
-
-    handleEvent(action: string, event: CalendarEvent): void {
-      //this.modalData = { event, action };
-      //this.modal.open(this.modalContent, { size: 'lg' });
+    handleEvent(event: CalendarEvent): void {
+      let title = event.title;
+      let description = event.meta.description;
+      this.modalData = { title, description, event };
+      this.modal.open(this.modalContent, { size: 'lg' });
+      /*
       console.log(event.id);
       if (event.id != undefined) {
         this.router.navigateByUrl('/tutorials/' + event.id);
       }
+      */
     }
 
     setView(view: CalendarView) {
