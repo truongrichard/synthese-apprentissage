@@ -1,0 +1,54 @@
+<div>
+    <div class="submit-form">
+      <div *ngIf="!submitted">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input
+                type="text"
+                class="form-control"
+                id="title"
+                required
+                [(ngModel)]="exercise.title"
+                name="title"
+            />
+        </div>
+  
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input
+                class="form-control"
+                id="description"
+                required
+                [(ngModel)]="exercise.description"
+                name="description"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Body part</label>
+            <select class="form-control" [(ngModel)]="exercise.bodyPart">
+                <option *ngFor="let bodyPart of bodyParts"[value]="bodyPart">
+                    {{bodyPart}}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Category</label>
+            <select class="form-control" [(ngModel)]="exercise.category">
+                <option *ngFor="let category of categories"[value]="category">
+                    {{category}}
+                </option>
+            </select>
+        </div>
+  
+        <button (click)="saveExercise()" class="btn btn-success">Submit</button>
+      </div>
+  
+      <div *ngIf="submitted">
+        <h4>Exercise was submitted successfully!</h4>
+        <button class="btn btn-success" (click)="newExercise()">Add new exercise</button>
+      </div>
+    </div>
+  </div>
+  

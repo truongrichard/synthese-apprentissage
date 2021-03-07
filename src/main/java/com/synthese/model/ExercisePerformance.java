@@ -3,6 +3,8 @@ package com.synthese.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Duration;
+
 @Document(collection = "exercises_performances")
 public class ExercisePerformance {
     @Id
@@ -12,6 +14,7 @@ public class ExercisePerformance {
     private int sets;
     private int repetitions;
     private double weight;
+    private Duration duration;
 
     public ExercisePerformance() {
 
@@ -52,4 +55,8 @@ public class ExercisePerformance {
     public void setWeight(double weight) {
         this.weight = weight;
     }
+
+    public Duration getDuration() { return duration; }
+
+    public void setDuration(Duration duration) { this.duration = duration; }
 }

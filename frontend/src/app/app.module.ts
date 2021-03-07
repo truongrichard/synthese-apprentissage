@@ -15,6 +15,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import { ExerciseAddComponent } from './components/exercise-add/exercise-add.component';
+import { ExerciseListComponent } from './components/exercise-list/exercise-list.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { FlatpickrModule } from 'angularx-flatpickr';
     AddTutorialComponent,
     TutorialDetailsComponent,
     TutorialsListComponent,
-    HistoryComponent
+    HistoryComponent,
+    ExerciseAddComponent,
+    ExerciseListComponent
   ],
   imports: [
     BrowserModule,

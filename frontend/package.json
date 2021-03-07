@@ -26,6 +26,7 @@
     "bootstrap": "^4.5.0",
     "date-fns": "^2.16.1",
     "flatpickr": "^4.6.9",
+    "html-duration-picker": "^2.2.12",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

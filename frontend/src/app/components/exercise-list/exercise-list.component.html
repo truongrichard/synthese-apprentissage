@@ -1,0 +1,69 @@
+<div class="list row">
+    <div class="col-md-8">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by title"
+          [(ngModel)]="title"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            (click)="searchTitle()"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4>Exercise List</h4>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let exercise of exercises; let i = index"
+          [class.active]="i == currentIndex"
+          (click)="setActiveExercise(exercise, i)"
+        >
+          {{ exercise.title }}
+        </li>
+      </ul>
+  
+      <button class="m-3 btn btn-sm btn-warning" routerLink="/addExercise">
+        Add Exercise
+      </button>
+    </div>
+    <div class="col-md-6">
+      <div *ngIf="currentExercise">
+        <h4>Exercise</h4>
+        <div>
+          <label><strong>Title:</strong></label> 
+          {{ currentExercise.title }}
+        </div>
+        <div>
+          <label><strong>Bodypart:</strong></label>
+          {{ currentExercise.bodyPart }}
+        </div>
+        <div>
+          <label><strong>Category:</strong></label>
+          {{ currentExercise.category }}
+        </div>
+        <div>
+          <label><strong>Description:</strong></label>
+          {{ currentExercise.description }}
+        </div>
+  
+        <a class="badge badge-danger" (click)="deleteExercise(currentExercise.id)">
+          Delete
+        </a>
+      </div>
+  
+      <div *ngIf="!currentExercise">
+        <br />
+        <p>Please click on a Exercise...</p>
+      </div>
+    </div>
+  </div>
+  

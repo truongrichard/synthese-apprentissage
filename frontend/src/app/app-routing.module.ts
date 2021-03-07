@@ -4,13 +4,17 @@ import { TutorialsListComponent } from './components/tutorials-list/tutorials-li
 import { TutorialDetailsComponent } from './components/tutorial-details/tutorial-details.component';
 import { AddTutorialComponent } from './components/add-tutorial/add-tutorial.component';
 import { HistoryComponent } from './components/history/history.component';
+import { ExerciseListComponent } from './components/exercise-list/exercise-list.component';
+import { ExerciseAddComponent } from './components/exercise-add/exercise-add.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'tutorials', pathMatch: 'full' },
   { path: 'tutorials', component: TutorialsListComponent },
   { path: 'tutorials/:id', component: TutorialDetailsComponent },
   { path: 'add', component: AddTutorialComponent },
-  { path: 'history', component: HistoryComponent }
+  { path: 'history', component: HistoryComponent },
+  { path: 'listExercise', component: ExerciseListComponent },
+  { path: 'addExercise', component: ExerciseAddComponent }
 ];
 
 @NgModule({

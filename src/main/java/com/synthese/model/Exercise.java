@@ -12,6 +12,7 @@ public class Exercise {
   private String description;
 
   private BodyPart bodyPart;
+  private Category category;
 
   public Exercise() {
 
@@ -43,13 +44,15 @@ public class Exercise {
     this.description = description;
   }
 
-  public BodyPart getBodyPart() {
-    return bodyPart;
-  }
+  public BodyPart getBodyPart() { return bodyPart; }
 
   public void setBodyPart(BodyPart bodyPart) {
     this.bodyPart = bodyPart;
   }
+
+  public Category getCategory() { return category; }
+
+  public void setCategory(Category category) { this.category = category; }
 
   public enum BodyPart {
     ARM,
@@ -58,5 +61,14 @@ public class Exercise {
     SHOULDER,
     BACK,
     LEG
+  }
+
+  public enum Category {
+    BARBELL,
+    DUMBBELL,
+    BODYWEIGHT,
+    CARDIO,
+    DURATION,
+    MACHINE
   }
 }
