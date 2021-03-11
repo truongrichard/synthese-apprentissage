@@ -5,39 +5,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Duration;
 
-@Document(collection = "exercises_performances")
-public class ExercisePerformance {
+@Document(collection = "exercises_sets")
+public class ExerciseSet {
     @Id
     private String id;
 
-    private Exercise exercise;
-    private int sets;
     private int repetitions;
     private double weight;
     private Duration duration;
 
-    public ExercisePerformance() {
+    public ExerciseSet() {
 
     }
 
     public String getId() {
         return id;
-    }
-
-    public Exercise getExercise() {
-        return exercise;
-    }
-
-    public void setExercise(Exercise exercise) {
-        this.exercise = exercise;
-    }
-
-    public int getSets() {
-        return sets;
-    }
-
-    public void setSets(int sets) {
-        this.sets = sets;
     }
 
     public int getRepetitions() {

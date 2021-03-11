@@ -14,16 +14,11 @@ public class Workout {
   private String title;
   private String description;
   private LocalDate date;
-  private List<ExercisePerformance> exercises;
+  private Exercise exercise;
+  private List<ExerciseSet> exerciseSets;
 
   public Workout() {
 
-  }
-
-  public Workout(String title, String description) {
-    this.title = title;
-    this.description = description;
-    this.date = LocalDate.now();
   }
 
   public String getId() {
@@ -54,11 +49,15 @@ public class Workout {
     this.date = date;
   }
 
-  public List<ExercisePerformance> getExercises() {
-    return exercises;
+  public Exercise getExercise() { return exercise; }
+
+  public void setExercise(Exercise exercise) { this.exercise = exercise; }
+
+  public List<ExerciseSet> getExerciseSets() {
+    return exerciseSets;
   }
 
-  public void setExercises(List<ExercisePerformance> exercises) {
-    this.exercises = exercises;
+  public void setExerciseSets(List<ExerciseSet> exerciseSets) {
+    this.exerciseSets = exerciseSets;
   }
 }
