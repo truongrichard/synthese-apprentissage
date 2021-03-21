@@ -8,7 +8,7 @@ const baseUrl = 'http://localhost:8080/days';
 @Injectable({
   providedIn: 'root'
 })
-export class WorkoutService {
+export class DayService {
 
   constructor(private http: HttpClient) { }
 
@@ -32,7 +32,7 @@ export class WorkoutService {
     return this.http.delete(baseUrl + "/deleteAll");
   }
 
-  findByTitle(date: any): Observable<Day[]> {
+  findByDate(date: any): Observable<Day[]> {
     return this.http.get<Day[]>(baseUrl + "/getAll?date=" + date);
   }
 }

@@ -21,6 +21,6 @@ export enum Category {
     BODYWEIGHT = "BODYWEIGHT",
     CARDIO = "CARDIO",
     DURATION = "DURATION",
-    MACHINe = "MACHINe",
+    MACHINe = "MACHINE",
 }
   

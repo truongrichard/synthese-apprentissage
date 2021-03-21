@@ -1,0 +1,25 @@
+<mat-form-field>
+    <input matInput [matDatepicker]="picker1" placeholder="Angular forms" [(ngModel)]="startDate">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker [dateClass]="dateClass" #picker1></mat-datepicker>
+</mat-form-field>
+
+<button mat-raised-button color="accent" class="Button" (click)="searchFor()">Search</button>
+
+<div class="col-md-6">
+    <h4>Workout List</h4>
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let day of days; let i = index"
+        [class.active]="i == currentIndex"
+        (click)="setActiveDay(day, i)"
+      >
+        {{ day.date }}
+      </li>
+    </ul>
+
+    <button class="m-3 btn btn-sm btn-warning">
+      Add Workout
+    </button>
+  </div>

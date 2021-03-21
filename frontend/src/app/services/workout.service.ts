@@ -32,7 +32,7 @@ export class WorkoutService {
     return this.http.delete(baseUrl + "/deleteAll");
   }
 
-  findByTitle(date: any): Observable<Workout[]> {
+  findByDate(date: any): Observable<Workout[]> {
     return this.http.get<Workout[]>(baseUrl + "/getAll?date=" + date);
   }
 }
