@@ -6,20 +6,45 @@
 
 <button mat-raised-button color="accent" class="Button" (click)="searchFor()">Search</button>
 
-<div class="col-md-6">
-    <h4>Workout List</h4>
-    <ul class="list-group">
-      <li
-        class="list-group-item"
-        *ngFor="let day of days; let i = index"
-        [class.active]="i == currentIndex"
-        (click)="setActiveDay(day, i)"
-      >
-        {{ day.date }}
-      </li>
-    </ul>
+<div class="list row">
+    <div class="col-md-6">
+        <h4>Workout List</h4>
+        <ul class="list-group">
+        <li
+            class="list-group-item"
+            *ngFor="let workout of workouts; let i = index"
+            [class.active]="i == currentIndex"
+            (click)="setActiveWorkout(workout, i)"
+        >
+            {{ workout.title }}
+        </li>
+        </ul>
 
-    <button class="m-3 btn btn-sm btn-warning">
-      Add Workout
-    </button>
-  </div>
+        <button class="m-3 btn btn-sm btn-warning" (click)="test()">Add Workout</button>
+    </div>
+
+
+    <div class="col-md-6">
+        <div *ngIf="currentWorkout">
+          <h4>Workout</h4>
+          <div>
+            <label><strong>Date:</strong></label> 
+            {{ currentWorkout.date }}
+          </div>
+          <div>
+            <label><strong>Title:</strong></label> 
+            {{ currentWorkout.title }}
+          </div>
+          <div>
+            <label><strong>Description:</strong></label> 
+            {{ currentWorkout.description }}
+          </div>
+        </div>
+    
+        <div *ngIf="!currentWorkout">
+          <br />
+          <p>Please click on a workout...</p>
+        </div>
+    </div>
+</div>
+    
