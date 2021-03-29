@@ -8,6 +8,9 @@ import { ExerciseListComponent } from './components/exercise-list/exercise-list.
 import { ExerciseAddComponent } from './components/exercise-add/exercise-add.component';
 import { DiaryComponent } from './components/diary/diary.component';
 
+
+import { WorkoutListComponent } from './components/workout-list/workout-list.component';
+
 const routes: Routes = [
   { path: '', redirectTo: 'tutorials', pathMatch: 'full' },
   { path: 'tutorials', component: TutorialsListComponent },
@@ -16,7 +19,8 @@ const routes: Routes = [
   { path: 'history', component: HistoryComponent },
   { path: 'diary', component: DiaryComponent },
   { path: 'listExercise', component: ExerciseListComponent },
-  { path: 'addExercise', component: ExerciseAddComponent }
+  { path: 'addExercise', component: ExerciseAddComponent },
+  { path: 'workout', component: WorkoutListComponent }
 ];
 
 @NgModule({

@@ -5,7 +5,6 @@ import { DayService } from 'src/app/services/day.service';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { createNodeArray, updateIndexedAccessTypeNode } from 'typescript';
 
-
 @Component({
   selector: 'app-diary',
   templateUrl: './diary.component.html',

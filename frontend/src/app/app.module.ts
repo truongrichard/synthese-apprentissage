@@ -55,6 +55,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 
+import { CommonModule } from '@angular/common'; 
+
+
+import { WorkoutComponent } from './components/workout/workout.component';
+import { WorkoutListComponent } from './components/workout-list/workout-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,13 +71,17 @@ import { MatTreeModule } from '@angular/material/tree';
     HistoryComponent,
     ExerciseAddComponent,
     ExerciseListComponent,
-    DiaryComponent
+    DiaryComponent,
+
+    WorkoutComponent,
+    WorkoutListComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     FlatpickrModule.forRoot(),
@@ -108,7 +119,9 @@ import { MatTreeModule } from '@angular/material/tree';
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+
+        CommonModule
     ],
   providers: [],
   bootstrap: [AppComponent]
