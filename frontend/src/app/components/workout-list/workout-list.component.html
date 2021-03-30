@@ -11,12 +11,16 @@
     <div class="container">
       <table class="table">
         <thead>
+          <th>Date</th>
           <th>Title</th>
           <th>Description</th>
+          <th>Exercise</th>
         </thead>
         <tr *ngFor="let workout of workouts">
+          <td>{{workout.date}}</td>
           <td>{{workout.title}}</td>
           <td>{{workout.description}}</td>
+          <td *ngIf="workout.exercise !== undefined">{{workout.exercise.title}}</td>
           <td><mat-icon (click)="editWorkout(workout.id)">edit</mat-icon></td>
           <td><mat-icon (click)="deleteWorkout(workout.id)">delete</mat-icon></td>
       

@@ -1,10 +1,14 @@
-<mat-card-header>
-  <mat-toolbar class="toolbar">
-    <mat-card-title>Workout Information</mat-card-title>
-    <span class="toolbar-spacer"></span>
-    <mat-icon (click)="onNoClick()">cancel</mat-icon>
+<p>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Workout Information</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon (click)="onNoClick()">cancel</mat-icon>
+      </button>
+    </mat-toolbar-row>
   </mat-toolbar>
-</mat-card-header>
+</p>
 <mat-card-content>
   <div class="container">
     <form [formGroup]="workoutForm" (submit)="onSubmit()">
@@ -21,8 +25,8 @@
         </div>
 
         <div class="col-xs-2">
-          <label class="control-label" for="Country">Exercise</label>
-          <select formControlName="exercise" [(ngModel)]="exerciseId" class="form-control">
+          <label>Exercise</label>
+          <select formControlName="exercise" class="form-control">
               <option *ngFor="let exercise of exercises" [ngValue]="exercise">{{exercise.title}}</option>
           </select>
         </div>

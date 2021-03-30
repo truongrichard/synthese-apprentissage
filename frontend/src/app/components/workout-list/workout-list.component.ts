@@ -36,7 +36,7 @@ export class WorkoutListComponent implements OnInit {
   addWorkout() {
     this.isPopupOpened = true;
     const dialogRef = this.dialog.open(WorkoutComponent, {
-      data: {}
+      data: {date: "2021-03-29",}
     });
 
 
@@ -46,11 +46,9 @@ export class WorkoutListComponent implements OnInit {
     });
   }
 
-  //TO DO...
-  editWorkout(id?: number) {
+  editWorkout(id?: string) {
     this.isPopupOpened = true;
-    const workout = this.workoutService.get(id);
-    //...
+    let workout = this.getWorkout(id)[0];
     const dialogRef = this.dialog.open(WorkoutComponent, {
       data: workout
     });
@@ -60,6 +58,15 @@ export class WorkoutListComponent implements OnInit {
       this.isPopupOpened = false;
       this.getAllWorkouts();
     });
+  }
+
+  getWorkout(id?: string) {
+    if (this.workouts) {
+      return this.workouts.filter(x => x.id === id);
+    }
+    else{
+      return "";
+    }
   }
 
   deleteWorkout(id?: any) {

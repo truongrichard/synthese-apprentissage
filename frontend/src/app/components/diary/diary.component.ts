@@ -5,6 +5,10 @@ import { DayService } from 'src/app/services/day.service';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { createNodeArray, updateIndexedAccessTypeNode } from 'typescript';
 
+
+import { MatDialog } from '@angular/material/dialog';
+import { WorkoutComponent } from '../workout/workout.component';
+
 @Component({
   selector: 'app-diary',
   templateUrl: './diary.component.html',
@@ -13,14 +17,13 @@ import { createNodeArray, updateIndexedAccessTypeNode } from 'typescript';
 })
 export class DiaryComponent implements OnInit {
   allDays?: Day[];
-  workouts?: Workout[];
+  searchedWorkouts?: Workout[];
   currentIndex = -1;
   currentWorkout?: Workout;
 
-  testDays?: Day[];
-  testWorkouts?: Workout[];
+  isPopupOpened = true;
 
-  constructor(private dayService: DayService, private workoutService: WorkoutService) { }
+  constructor(private dialog: MatDialog, private dayService: DayService, private workoutService: WorkoutService) { }
 
   convert(str: string) {
     var date = new Date(str),
@@ -31,7 +34,6 @@ export class DiaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.retrieveAllDays();
-    this.retrieveAllWorkouts();
   }
 
   retrieveAllDays(): void {
@@ -57,12 +59,10 @@ export class DiaryComponent implements OnInit {
   startDate: Date = new Date();
 
   searchFor() {
-    //console.log(this.startDate.toString());
-    //console.log(this.convert(this.startDate.toString()));
     this.workoutService.findByDate(this.convert(this.startDate.toString()))
       .subscribe(
         data => {
-          this.workouts = data;
+          this.searchedWorkouts = data;
           console.log(data);
         },
         error => {
@@ -75,60 +75,17 @@ export class DiaryComponent implements OnInit {
     this.currentIndex = index;
   }
 
-  test() {
-    console.log("TEST ADD WORKOUT");
-    const dateSearch = this.convert(this.startDate.toString());
-    if (this.allDays) {
-      this.allDays.find(f => f.date == dateSearch) ? this.updateDayLog(dateSearch): this.createDayLog();
-    }
-  }
-   
-  retrieveAllWorkouts(): void {
-    this.workoutService.getAll()
-      .subscribe(
-        data => {
-          this.testWorkouts = data;
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
-  }
+  // WIP
+  addWorkout() {
+    this.isPopupOpened = true;
+    const dialogRef = this.dialog.open(WorkoutComponent, {
+      data: {date: this.convert(this.startDate.toString()),}
+    });
 
-  updateDayLog(dateSearch: string) {
-    console.log("FOUND");
-    if (this.allDays) {
-      let updateDay = this.allDays.filter(x => x.date === dateSearch)
-      updateDay[0].workouts = this.testWorkouts;
-      console.log(updateDay[0]);
-      this.dayService.create(updateDay[0])
-        .subscribe(
-          response => {
-            console.log(response);
-          },
-          error => {
-            console.log(error);
-          });
-          
-      this.retrieveAllDays();    
-    }
-  }
 
-  createDayLog() {
-    console.log("NOTFOUND");
-    const data = {
-      date: this.convert(this.startDate.toString())
-    };
-
-    this.dayService.create(data)
-      .subscribe(
-        response => {
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-        });
-    
-    this.retrieveAllDays();    
+    dialogRef.afterClosed().subscribe(result => {
+      this.isPopupOpened = false;
+      this.searchFor();
+    });
   }
 }

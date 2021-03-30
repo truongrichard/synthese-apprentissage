@@ -12,7 +12,7 @@
         <ul class="list-group">
         <li
             class="list-group-item"
-            *ngFor="let workout of workouts; let i = index"
+            *ngFor="let workout of searchedWorkouts; let i = index"
             [class.active]="i == currentIndex"
             (click)="setActiveWorkout(workout, i)"
         >
@@ -20,13 +20,13 @@
         </li>
         </ul>
 
-        <button class="m-3 btn btn-sm btn-warning" (click)="test()">Add Workout</button>
+        <button class="m-3 btn btn-sm btn-warning" (click)="addWorkout()">Add Workout</button>
     </div>
 
 
     <div class="col-md-6">
         <div *ngIf="currentWorkout">
-          <h4>Workout</h4>
+          <h4>Workout Details</h4>
           <div>
             <label><strong>Date:</strong></label> 
             {{ currentWorkout.date }}

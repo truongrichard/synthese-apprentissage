@@ -38,6 +38,7 @@ export class WorkoutComponent implements OnInit {
     
     this.workoutForm = this._formBuilder.group({
       id: [this.data.id],
+      date: [ this.data.date],
       title: [ this.data.title, [Validators.required]],
       description: [ this.data.description, [Validators.required]],
       exercise: [ this.data.exercise, [Validators.required]],
