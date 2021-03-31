@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Day } from 'src/app/models/day.model';
 import { Workout } from 'src/app/models/workout.model';
+import { ExerciseSet } from 'src/app/models/exerciseSet.model';
 import { DayService } from 'src/app/services/day.service';
 import { WorkoutService } from 'src/app/services/workout.service';
+import { ExerciseSetService } from 'src/app/services/exerciseSet.service';
 import { createNodeArray, updateIndexedAccessTypeNode } from 'typescript';
 
 
@@ -23,7 +25,7 @@ export class DiaryComponent implements OnInit {
 
   isPopupOpened = true;
 
-  constructor(private dialog: MatDialog, private dayService: DayService, private workoutService: WorkoutService) { }
+  constructor(private dialog: MatDialog, private dayService: DayService, private workoutService: WorkoutService, private exerciseSetService: ExerciseSetService) { }
 
   convert(str: string) {
     var date = new Date(str),
@@ -82,10 +84,31 @@ export class DiaryComponent implements OnInit {
       data: {date: this.convert(this.startDate.toString()),}
     });
 
-
     dialogRef.afterClosed().subscribe(result => {
       this.isPopupOpened = false;
       this.searchFor();
     });
+  }
+
+  // ExerciseSet
+  addExerciseSet() {
+    
+  }
+
+  editExerciseSet(id?: any) {
+
+  }
+
+  deleteExerciseSet(id?: any) {
+    console.log("DELETE!");
+    this.exerciseSetService.delete(id!)
+      .subscribe(
+        response => {
+          console.log(response);
+          //...
+        },
+        error => {
+          console.log(error);
+        });
   }
 }

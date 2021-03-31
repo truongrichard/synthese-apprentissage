@@ -40,6 +40,28 @@
             {{ currentWorkout.description }}
           </div>
         </div>
+
+        <mat-card-content>
+          <div class="container" *ngIf="currentWorkout">
+            <table class="table">
+              <thead>
+                <th>No</th>
+                <th>Repititions</th>
+                <th>Weight</th>
+                <th>Duration</th>
+              </thead>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><mat-icon (click)="editExerciseSet()">edit</mat-icon></td>
+                <td><mat-icon (click)="deleteExerciseSet()">delete</mat-icon></td>
+            
+              </tr>
+            </table>
+          </div>
+        </mat-card-content>
     
         <div *ngIf="!currentWorkout">
           <br />

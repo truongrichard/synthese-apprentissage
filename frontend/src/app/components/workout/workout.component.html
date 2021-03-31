@@ -31,6 +31,52 @@
           </select>
         </div>
 
+        <!--
+        <form [formGroup]="setForm">
+            <label>Repitition</label>
+            <input formControlName="repititions" class="form-control">
+            <button (click)="addExerciseSet()">Add Set</button>
+        </form>
+
+        <div *ngFor="let set of exerciseSetArray.controls; index as i">
+          <div>{{set}}</div>
+        </div>
+        -->
+
+          <table>
+          <tr formArrayName="exerciseSet" *ngFor="let set of exerciseSetArray.controls; let i = index">
+            <div [formGroupName]="i">
+              <td>
+                <input type="text" class="form-control" [id]="'id' + i" placeholder="id"  formControlName="id">
+                <div *ngIf="set.get('id')!.errors?.required && set.get('id')!.touched">
+                    id is required
+                </div>
+              </td>
+              <td>
+                <input type="text" class="form-control" [id]="'repititions' + i" placeholder="repititions"  formControlName="repititions">
+                <div *ngIf="set.get('repititions')!.errors?.required && set.get('repititions')!.touched">
+                    repititions is required
+                </div>
+              </td>
+              <td>
+                <input type="text" class="form-control" [id]="'weight' + i" placeholder="weight"  formControlName="weight">
+                <div *ngIf="set.get('weight')!.errors?.required && set.get('weight')!.touched">
+                    weight is required
+                </div>
+              </td>
+              <td>
+                <input type="text" class="form-control" [id]="'duration' + i" placeholder="duration"  formControlName="duration">
+                <div *ngIf="set.get('duration')!.errors?.required && set.get('duration')!.touched">
+                    duration is required
+                </div>
+              </td>
+              <td>
+                <button type="button" (click)="addExerciseSet()">Add</button>
+              </td>
+            </div>
+          </tr>
+        </table>
+
         <div class="row">
           <div class="col-md-6">
           <button type="submit" class="btn btn-success">
