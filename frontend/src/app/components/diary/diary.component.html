@@ -39,8 +39,15 @@
             <label><strong>Description:</strong></label> 
             {{ currentWorkout.description }}
           </div>
+          <div *ngIf="currentExercise">
+            <label><strong>Exercise:</strong></label> 
+            {{ currentExercise.title }}
+          </div>
         </div>
 
+        
+        <button class="m-3 btn btn-sm btn-warning" (click)="addExerciseSet()">Add Set</button>
+        
         <mat-card-content>
           <div class="container" *ngIf="currentWorkout">
             <table class="table">
@@ -48,15 +55,17 @@
                 <th>No</th>
                 <th>Repititions</th>
                 <th>Weight</th>
-                <th>Duration</th>
+                <th>Time</th>
+                <th>Distance</th>
               </thead>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><mat-icon (click)="editExerciseSet()">edit</mat-icon></td>
-                <td><mat-icon (click)="deleteExerciseSet()">delete</mat-icon></td>
+              <tr *ngFor="let set of exerciseSets">
+                <td>{{set.id}}</td>
+                <td>{{set.repetitions}}</td>
+                <td>{{set.weight}}</td>
+                <td>{{set.time}}</td>
+                <td>{{set.distance}}</td>
+                <td><mat-icon (click)="editExerciseSet(set.id)">edit</mat-icon></td>
+                <td><mat-icon (click)="deleteExerciseSet(set.id)">delete</mat-icon></td>
             
               </tr>
             </table>

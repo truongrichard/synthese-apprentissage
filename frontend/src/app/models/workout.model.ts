@@ -1,5 +1,4 @@
 import { Exercise } from "./exercise.model";
-import { ExerciseSet } from "./exerciseSet.model";
 
 export class Workout {
     id?: any;
@@ -7,5 +6,4 @@ export class Workout {
     description?: string;
     date?: string;
     exercise?: Exercise;
-    exerciseSets?: Array<ExerciseSet>;
 }

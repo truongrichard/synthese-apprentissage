@@ -10,6 +10,8 @@ import { createNodeArray, updateIndexedAccessTypeNode } from 'typescript';
 
 import { MatDialog } from '@angular/material/dialog';
 import { WorkoutComponent } from '../workout/workout.component';
+import { ExerciseSetAddComponent } from '../exercise-set-add/exercise-set-add.component';
+import { Exercise } from 'src/app/models/exercise.model';
 
 @Component({
   selector: 'app-diary',
@@ -22,6 +24,8 @@ export class DiaryComponent implements OnInit {
   searchedWorkouts?: Workout[];
   currentIndex = -1;
   currentWorkout?: Workout;
+  currentExercise?: Exercise;
+  exerciseSets?: ExerciseSet[];
 
   isPopupOpened = true;
 
@@ -61,6 +65,7 @@ export class DiaryComponent implements OnInit {
   startDate: Date = new Date();
 
   searchFor() {
+    this.clearCurrentWorkout();
     this.workoutService.findByDate(this.convert(this.startDate.toString()))
       .subscribe(
         data => {
@@ -70,11 +75,33 @@ export class DiaryComponent implements OnInit {
         error => {
           console.log(error);
         });
-  };
+  }
+  
+  clearCurrentWorkout() {
+    this.currentWorkout = undefined;
+    this.currentExercise = undefined;
+    this.currentIndex = -1;
+  }
 
   setActiveWorkout(workout: Workout, index: number): void {
     this.currentWorkout = workout;
+    this.currentExercise = workout.exercise;
     this.currentIndex = index;
+    this.searchForExerciseSets();
+  }
+
+  searchForExerciseSets() {
+    console.log(this.currentWorkout?.id);
+    this.exerciseSetService.getAllExerciseSet(this.currentWorkout?.id)
+      .subscribe(
+        data => {
+          this.exerciseSets = data;
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        });
+
   }
 
   // WIP
@@ -92,11 +119,28 @@ export class DiaryComponent implements OnInit {
 
   // ExerciseSet
   addExerciseSet() {
-    
+    this.isPopupOpened = true;
+    const dialogRef = this.dialog.open(ExerciseSetAddComponent, {
+      data: {workout: this.currentWorkout, set: ""}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.isPopupOpened = false;
+      this.searchForExerciseSets();
+    });
   }
 
   editExerciseSet(id?: any) {
+    this.isPopupOpened = true;
+    let set = this.getExerciseSet(id)[0];
+    const dialogRef = this.dialog.open(ExerciseSetAddComponent, {
+      data: {workout: this.currentWorkout, set: set,}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      this.isPopupOpened = false;
+      this.searchForExerciseSets();
+    });
   }
 
   deleteExerciseSet(id?: any) {
@@ -105,10 +149,19 @@ export class DiaryComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response);
-          //...
+          this.searchForExerciseSets();
         },
         error => {
           console.log(error);
         });
+  }
+
+  getExerciseSet(id?: string) {
+    if (this.exerciseSets) {
+      return this.exerciseSets.filter(x => x.id === id);
+    }
+    else{
+      return "";
+    }
   }
 }

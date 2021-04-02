@@ -61,6 +61,7 @@ import { CommonModule } from '@angular/common';
 import { WorkoutComponent } from './components/workout/workout.component';
 import { WorkoutListComponent } from './components/workout-list/workout-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ExerciseSetAddComponent } from './components/exercise-set-add/exercise-set-add.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DiaryComponent,
 
     WorkoutComponent,
-    WorkoutListComponent
+    WorkoutListComponent,
+    ExerciseSetAddComponent
   ],
   imports: [
     BrowserModule,

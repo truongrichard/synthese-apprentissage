@@ -31,4 +31,8 @@ export class ExerciseSetService {
   deleteAll(): Observable<any> {
     return this.http.delete(baseUrl + "/deleteAll");
   }
+
+  getAllExerciseSet(id: any): Observable<ExerciseSet[]> {
+    return this.http.get<ExerciseSet[]>(baseUrl + "/get/exerciseSet/" + id);
+  }
 }
