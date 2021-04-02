@@ -15,7 +15,6 @@ public class Workout {
   private String description;
   private LocalDate date;
   private Exercise exercise;
-  private List<ExerciseSet> exerciseSets;
 
   public Workout() {
 
@@ -53,11 +52,4 @@ public class Workout {
 
   public void setExercise(Exercise exercise) { this.exercise = exercise; }
 
-  public List<ExerciseSet> getExerciseSets() {
-    return exerciseSets;
-  }
-
-  public void setExerciseSets(List<ExerciseSet> exerciseSets) {
-    this.exerciseSets = exerciseSets;
-  }
 }

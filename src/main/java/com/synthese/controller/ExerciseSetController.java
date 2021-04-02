@@ -75,4 +75,20 @@ public class ExerciseSetController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/get/exerciseSet/{id}")
+    public ResponseEntity<List<ExerciseSet>> getExerciseSetById(@PathVariable("id") String id) {
+        try {
+            List<ExerciseSet> exerciseSets = new ArrayList<ExerciseSet>();
+
+            exerciseSetRepository.findAllByWorkoutId(id).forEach(exerciseSets::add);
+
+            if (exerciseSets.isEmpty())
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+            return new ResponseEntity<>(exerciseSets, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

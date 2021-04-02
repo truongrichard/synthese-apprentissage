@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +27,10 @@ public class WorkoutController {
 
             if (date == null)
                 workoutRepository.findAll().forEach(workouts::add);
-            else
-                workoutRepository.findByDateEquals(date).forEach(workouts::add);
+            else {
+                LocalDate localDate = LocalDate.parse(date);
+                workoutRepository.findByDateEquals(localDate).forEach(workouts::add);
+            }
 
             if (workouts.isEmpty())
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

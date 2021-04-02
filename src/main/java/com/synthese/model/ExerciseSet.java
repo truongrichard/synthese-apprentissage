@@ -12,7 +12,9 @@ public class ExerciseSet {
 
     private int repetitions;
     private double weight;
-    private Duration duration;
+    private String time;
+    private double distance;
+    private Workout workout;
 
     public ExerciseSet() {
 
@@ -38,7 +40,27 @@ public class ExerciseSet {
         this.weight = weight;
     }
 
-    public Duration getDuration() { return duration; }
+    public String getTime() {
+        return time;
+    }
 
-    public void setDuration(Duration duration) { this.duration = duration; }
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(Workout workout) {
+        this.workout = workout;
+    }
 }

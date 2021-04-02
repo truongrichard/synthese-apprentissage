@@ -19,7 +19,13 @@ public class SpringBootDataMongodbApplication {
 
 	@Bean
 	CommandLineRunner commandLineRunner(){
-		return args -> service.insertExercise();
+		return new CommandLineRunner() {
+			@Override
+			public void run(String... args) throws Exception {
+				//service.insertExercise();
+				//service.insertDay();
+			}
+		};
 	}
 
 }

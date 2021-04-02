@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,11 +24,12 @@ public class DayController {
     public ResponseEntity<List<Day>> getAll(@RequestParam(required = false) String date) {
         try {
             List<Day> days = new ArrayList<Day>();
-
             if (date == null)
                 dayRepository.findAll().forEach(days::add);
-            else
-                dayRepository.findByDateEquals(date).forEach(days::add);
+            else{
+                LocalDate localDate = LocalDate.parse(date);
+                dayRepository.findByDateEquals(localDate).forEach(days::add);
+            }
 
             if (days.isEmpty())
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
