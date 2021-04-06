@@ -9,7 +9,7 @@ import { createNodeArray, updateIndexedAccessTypeNode } from 'typescript';
 
 
 import { MatDialog } from '@angular/material/dialog';
-import { WorkoutComponent } from '../workout/workout.component';
+import { WorkoutAddComponent } from '../workout/workout-add.component';
 import { ExerciseSetAddComponent } from '../exercise-set-add/exercise-set-add.component';
 import { Exercise } from 'src/app/models/exercise.model';
 
@@ -28,14 +28,81 @@ export class DiaryComponent implements OnInit {
   exerciseSets?: ExerciseSet[];
 
   isPopupOpened = true;
+  
+  startDate: Date = new Date();
 
   constructor(private dialog: MatDialog, private dayService: DayService, private workoutService: WorkoutService, private exerciseSetService: ExerciseSetService) { }
+  
+  dateClass = (d: Date) => {
+    const dateSearch = this.convert(d.toString());
+    if (this.allDays) {
+      return this.allDays.find(f => f.date == dateSearch) ? "example-custom-date-class": "";
+    }
+    return "";
+  };
 
   convert(str: string) {
     var date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
       day = ("0" + date.getDate()).slice(-2);
     return [date.getFullYear(), mnth, day].join("-");
+  }
+
+  checkDayExist(workouts: Workout[]) {
+    const dateSearch = this.convert(this.startDate.toString());
+    if (workouts) {
+      if (this.allDays){
+        const dayArray = this.allDays.filter(f => f.date == dateSearch);
+        this.updateCurrentDay(dayArray[0], workouts);
+      }  
+      else {
+        this.createNewDay(dateSearch, workouts);
+      }
+    } 
+
+    if (workouts == null) {
+      console.log(this.allDays);
+      if (this.allDays){
+        console.log("DELETE DAY!");
+        const dayArray = this.allDays.filter(f => f.date == dateSearch);
+        this.dayService.delete(dayArray[0].id)
+            .subscribe(
+              response => {
+                console.log(response);
+              },
+              error => {
+                console.log(error);
+              });
+      } 
+    }
+  }
+
+  private updateCurrentDay(updateDay: Day, workouts: Workout[]) {
+    updateDay.workouts = workouts;
+    this.dayService.create(updateDay)
+      .subscribe(
+        response => {
+          //console.log(response);
+          this.retrieveAllDays();
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  private createNewDay(dateSearch: string, workouts: Workout[]) {
+    const newDay = new Day();
+    newDay.date = dateSearch;
+    newDay.workouts = workouts;
+    this.dayService.create(newDay)
+      .subscribe(
+        response => {
+          //console.log(response);
+          this.retrieveAllDays();
+        },
+        error => {
+          console.log(error);
+        });
   }
 
   ngOnInit(): void {
@@ -47,22 +114,12 @@ export class DiaryComponent implements OnInit {
       .subscribe(
         data => {
           this.allDays = data;
-          console.log(data);
+          //console.log(data);
         },
         error => {
           console.log(error);
         });
   }
-
-  dateClass = (d: Date) => {
-    const dateSearch = this.convert(d.toString());
-    if (this.allDays) {
-      return this.allDays.find(f => f.date == dateSearch) ? "example-custom-date-class": "";
-    }
-    return "";
-  };
-
-  startDate: Date = new Date();
 
   searchFor() {
     this.clearCurrentWorkout();
@@ -70,11 +127,25 @@ export class DiaryComponent implements OnInit {
       .subscribe(
         data => {
           this.searchedWorkouts = data;
-          console.log(data);
+          //console.log(data);
         },
         error => {
           console.log(error);
-        });
+        });   
+  }
+
+  updateWorkoutsForCurrentDay() {
+    this.clearCurrentWorkout();
+    this.workoutService.findByDate(this.convert(this.startDate.toString()))
+      .subscribe(
+        data => {
+          this.searchedWorkouts = data;
+          this.checkDayExist(data);
+          //console.log(data);
+        },
+        error => {
+          console.log(error);
+        });   
   }
   
   clearCurrentWorkout() {
@@ -91,12 +162,11 @@ export class DiaryComponent implements OnInit {
   }
 
   searchForExerciseSets() {
-    console.log(this.currentWorkout?.id);
     this.exerciseSetService.getAllExerciseSet(this.currentWorkout?.id)
       .subscribe(
         data => {
           this.exerciseSets = data;
-          console.log(data);
+          //console.log(data);
         },
         error => {
           console.log(error);
@@ -107,15 +177,42 @@ export class DiaryComponent implements OnInit {
   // WIP
   addWorkout() {
     this.isPopupOpened = true;
-    const dialogRef = this.dialog.open(WorkoutComponent, {
+    const dialogRef = this.dialog.open(WorkoutAddComponent, {
       data: {date: this.convert(this.startDate.toString()),}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.isPopupOpened = false;
-      this.searchFor();
+      this.updateWorkoutsForCurrentDay();
     });
   }
+
+  editWorkout() {
+    this.isPopupOpened = true;
+    let workout = this.currentWorkout;
+    const dialogRef = this.dialog.open(WorkoutAddComponent, {
+      data: workout
+    });
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.isPopupOpened = false;
+      this.updateWorkoutsForCurrentDay();
+    });
+  }
+
+  deleteWorkout() {
+    this.workoutService.delete(this.currentWorkout!.id)
+      .subscribe(
+        response => {
+          //console.log(response);
+          this.updateWorkoutsForCurrentDay();
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
 
   // ExerciseSet
   addExerciseSet() {
@@ -144,11 +241,10 @@ export class DiaryComponent implements OnInit {
   }
 
   deleteExerciseSet(id?: any) {
-    console.log("DELETE!");
     this.exerciseSetService.delete(id!)
       .subscribe(
         response => {
-          console.log(response);
+          //console.log(response);
           this.searchForExerciseSets();
         },
         error => {

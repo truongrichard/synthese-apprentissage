@@ -12,11 +12,11 @@ import { ExerciseService } from 'src/app/services/exercise.service';
 import { Exercise } from 'src/app/models/exercise.model';
 
 @Component({
-  selector: 'app-workout',
-  templateUrl: './workout.component.html',
-  styleUrls: ['./workout.component.css']
+  selector: 'app-workout-add',
+  templateUrl: './workout-add.component.html',
+  styleUrls: ['./workout-add.component.css']
 })
-export class WorkoutComponent implements OnInit {
+export class WorkoutAddComponent implements OnInit {
 
   public workoutForm!: FormGroup;
 
@@ -25,8 +25,9 @@ export class WorkoutComponent implements OnInit {
   public exerciseId!: string;
 
   constructor(private _formBuilder: FormBuilder,
-  private dialogRef: MatDialogRef<WorkoutComponent>,
-  @Inject(MAT_DIALOG_DATA) public data: any, private workoutService: WorkoutService, private exerciseService: ExerciseService) { }
+              private dialogRef: MatDialogRef<WorkoutAddComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any, 
+              private workoutService: WorkoutService, private exerciseService: ExerciseService,) { }
 
   onNoClick(): void {
     this.dialogRef.close();

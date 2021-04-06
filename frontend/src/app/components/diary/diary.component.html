@@ -1,5 +1,5 @@
 <mat-form-field>
-    <input matInput [matDatepicker]="picker1" placeholder="Angular forms" [(ngModel)]="startDate">
+    <input matInput [matDatepicker]="picker1" placeholder="Select date" [(ngModel)]="startDate">
     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
     <mat-datepicker [dateClass]="dateClass" #picker1></mat-datepicker>
 </mat-form-field>
@@ -27,6 +27,10 @@
     <div class="col-md-6">
         <div *ngIf="currentWorkout">
           <h4>Workout Details</h4>
+          
+          <td><mat-icon (click)="editWorkout()">edit</mat-icon></td>
+          <td><mat-icon (click)="deleteWorkout()">delete</mat-icon></td>
+
           <div>
             <label><strong>Date:</strong></label> 
             {{ currentWorkout.date }}
@@ -45,11 +49,9 @@
           </div>
         </div>
 
-        
-        <button class="m-3 btn btn-sm btn-warning" (click)="addExerciseSet()">Add Set</button>
-        
         <mat-card-content>
           <div class="container" *ngIf="currentWorkout">
+
             <table class="table">
               <thead>
                 <th>No</th>
@@ -69,6 +71,9 @@
             
               </tr>
             </table>
+
+            <button class="btn btn-sm btn-warning" (click)="addExerciseSet()">Add Set</button>
+
           </div>
         </mat-card-content>
     

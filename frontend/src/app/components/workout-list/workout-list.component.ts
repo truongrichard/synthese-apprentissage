@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { WorkoutComponent } from '../workout/workout.component';
+import { WorkoutAddComponent } from '../workout/workout-add.component';
 
 import { WorkoutService } from 'src/app/services/workout.service';
 import { Workout } from 'src/app/models/workout.model';
@@ -35,7 +35,7 @@ export class WorkoutListComponent implements OnInit {
 
   addWorkout() {
     this.isPopupOpened = true;
-    const dialogRef = this.dialog.open(WorkoutComponent, {
+    const dialogRef = this.dialog.open(WorkoutAddComponent, {
       data: {date: "2021-03-29",}
     });
 
@@ -49,7 +49,7 @@ export class WorkoutListComponent implements OnInit {
   editWorkout(id?: string) {
     this.isPopupOpened = true;
     let workout = this.getWorkout(id)[0];
-    const dialogRef = this.dialog.open(WorkoutComponent, {
+    const dialogRef = this.dialog.open(WorkoutAddComponent, {
       data: workout
     });
 
