@@ -23,7 +23,7 @@ export class ExerciseSetAddComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
-   }
+  }
 
   ngOnInit() {
     this.exerciseSetForm = this._formBuilder.group({

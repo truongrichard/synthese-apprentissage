@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { WorkoutAddComponent } from '../workout/workout-add.component';
 import { ExerciseSetAddComponent } from '../exercise-set-add/exercise-set-add.component';
 import { Exercise } from 'src/app/models/exercise.model';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-diary',
@@ -46,6 +47,118 @@ export class DiaryComponent implements OnInit {
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
       day = ("0" + date.getDate()).slice(-2);
     return [date.getFullYear(), mnth, day].join("-");
+  }
+
+  ngOnInit(): void {
+    this.retrieveAllDays();
+    this.searchForWorkouts();
+  }
+
+  retrieveAllDays(): void {
+    this.dayService.getAll()
+      .subscribe(
+        data => {
+          this.allDays = data;
+          //console.log(data);
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  searchForWorkouts() {
+    this.clearCurrentWorkout();
+    this.workoutService.findByDate(this.convert(this.startDate.toString()))
+      .subscribe(
+        data => {
+          this.searchedWorkouts = data;
+          //console.log(data);
+        },
+        error => {
+          console.log(error);
+        });   
+  }
+  
+  clearCurrentWorkout() {
+    this.currentWorkout = undefined;
+    this.currentExercise = undefined;
+    this.currentIndex = -1;
+  }
+
+  setActiveWorkout(workout: Workout, index: number): void {
+    this.currentWorkout = workout;
+    this.currentExercise = workout.exercise;
+    this.currentIndex = index;
+    this.searchForExerciseSets();
+  }
+
+  searchForExerciseSets() {
+    this.exerciseSetService.getAllExerciseSet(this.currentWorkout?.id)
+      .subscribe(
+        data => {
+          this.exerciseSets = data;
+          //console.log(data);
+        },
+        error => {
+          console.log(error);
+        });
+
+  }  
+
+  onDateChanged() {
+    this.searchForWorkouts();
+  }
+
+  addWorkout() {
+    this.isPopupOpened = true;
+    const dialogRef = this.dialog.open(WorkoutAddComponent, {
+      data: {date: this.convert(this.startDate.toString()),}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.isPopupOpened = false;
+      this.updateWorkoutsForCurrentDay();
+    });
+  }
+
+  editWorkout() {
+    this.isPopupOpened = true;
+    let workout = this.currentWorkout;
+    const dialogRef = this.dialog.open(WorkoutAddComponent, {
+      data: workout
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.isPopupOpened = false;
+      this.clearCurrentWorkout();
+      this.updateWorkoutsForCurrentDay();
+    });
+  }
+
+  deleteWorkout() {
+    this.workoutService.delete(this.currentWorkout!.id)
+      .subscribe(
+        response => {
+          //console.log(response);
+          this.clearCurrentWorkout();
+          this.updateWorkoutsForCurrentDay();
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  updateWorkoutsForCurrentDay() {
+    this.workoutService.findByDate(this.convert(this.startDate.toString()))
+      .subscribe(
+        data => {
+          this.searchedWorkouts = data;
+          this.checkDayExist(data);
+          //console.log(data);
+        },
+        error => {
+          console.log(error);
+        });   
   }
 
   checkDayExist(workouts: Workout[]) {
@@ -105,116 +218,6 @@ export class DiaryComponent implements OnInit {
         });
   }
 
-  ngOnInit(): void {
-    this.retrieveAllDays();
-  }
-
-  retrieveAllDays(): void {
-    this.dayService.getAll()
-      .subscribe(
-        data => {
-          this.allDays = data;
-          //console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-  searchFor() {
-    this.clearCurrentWorkout();
-    this.workoutService.findByDate(this.convert(this.startDate.toString()))
-      .subscribe(
-        data => {
-          this.searchedWorkouts = data;
-          //console.log(data);
-        },
-        error => {
-          console.log(error);
-        });   
-  }
-
-  updateWorkoutsForCurrentDay() {
-    this.clearCurrentWorkout();
-    this.workoutService.findByDate(this.convert(this.startDate.toString()))
-      .subscribe(
-        data => {
-          this.searchedWorkouts = data;
-          this.checkDayExist(data);
-          //console.log(data);
-        },
-        error => {
-          console.log(error);
-        });   
-  }
-  
-  clearCurrentWorkout() {
-    this.currentWorkout = undefined;
-    this.currentExercise = undefined;
-    this.currentIndex = -1;
-  }
-
-  setActiveWorkout(workout: Workout, index: number): void {
-    this.currentWorkout = workout;
-    this.currentExercise = workout.exercise;
-    this.currentIndex = index;
-    this.searchForExerciseSets();
-  }
-
-  searchForExerciseSets() {
-    this.exerciseSetService.getAllExerciseSet(this.currentWorkout?.id)
-      .subscribe(
-        data => {
-          this.exerciseSets = data;
-          //console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
-
-  }
-
-  // WIP
-  addWorkout() {
-    this.isPopupOpened = true;
-    const dialogRef = this.dialog.open(WorkoutAddComponent, {
-      data: {date: this.convert(this.startDate.toString()),}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.isPopupOpened = false;
-      this.updateWorkoutsForCurrentDay();
-    });
-  }
-
-  editWorkout() {
-    this.isPopupOpened = true;
-    let workout = this.currentWorkout;
-    const dialogRef = this.dialog.open(WorkoutAddComponent, {
-      data: workout
-    });
-
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.isPopupOpened = false;
-      this.updateWorkoutsForCurrentDay();
-    });
-  }
-
-  deleteWorkout() {
-    this.workoutService.delete(this.currentWorkout!.id)
-      .subscribe(
-        response => {
-          //console.log(response);
-          this.updateWorkoutsForCurrentDay();
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-
-  // ExerciseSet
   addExerciseSet() {
     this.isPopupOpened = true;
     const dialogRef = this.dialog.open(ExerciseSetAddComponent, {

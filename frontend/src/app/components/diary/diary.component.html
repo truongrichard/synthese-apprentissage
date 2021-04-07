@@ -1,51 +1,65 @@
 <mat-form-field>
-    <input matInput [matDatepicker]="picker1" placeholder="Select date" [(ngModel)]="startDate">
+    <input matInput [matDatepicker]="picker1" placeholder="Select date" [(ngModel)]="startDate" (dateChange)="onDateChanged()">
     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
     <mat-datepicker [dateClass]="dateClass" #picker1></mat-datepicker>
 </mat-form-field>
 
-<button mat-raised-button color="accent" class="Button" (click)="searchFor()">Search</button>
-
 <div class="list row">
     <div class="col-md-6">
-        <h4>Workout List</h4>
-        <ul class="list-group">
-        <li
-            class="list-group-item"
+        
+        <mat-toolbar>
+          <mat-toolbar-row>
+            <span>Workout List</span>
+            <button mat-icon-button>
+              <mat-icon (click)="addWorkout()">add_circle</mat-icon>
+            </button>
+          </mat-toolbar-row>
+        </mat-toolbar>
+
+        <mat-selection-list [multiple]="false">
+          <mat-list-option
             *ngFor="let workout of searchedWorkouts; let i = index"
             [class.active]="i == currentIndex"
             (click)="setActiveWorkout(workout, i)"
-        >
-            {{ workout.title }}
-        </li>
-        </ul>
+          >
+              {{ workout.title }}
+          </mat-list-option>
+        </mat-selection-list>
 
-        <button class="m-3 btn btn-sm btn-warning" (click)="addWorkout()">Add Workout</button>
     </div>
 
 
     <div class="col-md-6">
         <div *ngIf="currentWorkout">
-          <h4>Workout Details</h4>
-          
-          <td><mat-icon (click)="editWorkout()">edit</mat-icon></td>
-          <td><mat-icon (click)="deleteWorkout()">delete</mat-icon></td>
 
-          <div>
-            <label><strong>Date:</strong></label> 
-            {{ currentWorkout.date }}
-          </div>
-          <div>
-            <label><strong>Title:</strong></label> 
-            {{ currentWorkout.title }}
-          </div>
-          <div>
-            <label><strong>Description:</strong></label> 
-            {{ currentWorkout.description }}
-          </div>
-          <div *ngIf="currentExercise">
-            <label><strong>Exercise:</strong></label> 
-            {{ currentExercise.title }}
+          <mat-toolbar>
+            <mat-toolbar-row>
+              <span>Details</span>
+              <span class="example-spacer"></span>
+              <button mat-icon-button>
+                <mat-icon (click)="editWorkout()">edit</mat-icon>
+                <mat-icon (click)="deleteWorkout()">delete</mat-icon>
+              </button>
+            </mat-toolbar-row>
+          </mat-toolbar>
+
+          <div class="container">
+            <div>
+              <label><strong>Date:</strong></label> 
+              {{ currentWorkout.date }}
+            </div>
+            <div>
+              <label><strong>Title:</strong></label> 
+              {{ currentWorkout.title }}
+            </div>
+            <div>
+              <label><strong>Description:</strong></label> 
+              {{ currentWorkout.description }}
+            </div>
+            <div *ngIf="currentExercise">
+              <label><strong>Exercise:</strong></label> 
+              {{ currentExercise.title }}
+            </div>
           </div>
         </div>
 
@@ -53,19 +67,19 @@
           <div class="container" *ngIf="currentWorkout">
 
             <table class="table">
-              <thead>
-                <th>No</th>
+              <thead *ngIf="exerciseSets">
+                <th>№</th>
                 <th>Repititions</th>
                 <th>Weight</th>
                 <th>Time</th>
                 <th>Distance</th>
               </thead>
-              <tr *ngFor="let set of exerciseSets">
-                <td>{{set.id}}</td>
+              <tr *ngFor="let set of exerciseSets; let i = index">
+                <td>Set №{{i+1}}</td>
                 <td>{{set.repetitions}}</td>
-                <td>{{set.weight}}</td>
+                <td>{{set.weight}} kg</td>
                 <td>{{set.time}}</td>
-                <td>{{set.distance}}</td>
+                <td>{{set.distance}} km</td>
                 <td><mat-icon (click)="editExerciseSet(set.id)">edit</mat-icon></td>
                 <td><mat-icon (click)="deleteExerciseSet(set.id)">delete</mat-icon></td>
             
