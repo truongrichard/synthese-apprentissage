@@ -1,5 +1,5 @@
 <p>
-  <mat-toolbar color="primary">
+  <mat-toolbar>
     <mat-toolbar-row>
       <span>Workout Information</span>
       <span class="example-spacer"></span>
@@ -13,29 +13,39 @@
   <div class="container">
     <form [formGroup]="workoutForm" (submit)="onSubmit()">
       <div class="form-group">
-        <div class="row">
-          <div class="col-md-6">
-            <label>Title</label>
-            <input type="text" formControlName="title" class="form-control">
+        <div class="container">
+          <div class="row">
+            <mat-form-field appearance="standard" style="width:300px !important">
+              <mat-label>Title Test</mat-label>
+              <input matInput type="text" formControlName="title">
+              <mat-error *ngIf="$any(workoutForm).controls['title'].invalid">*Required</mat-error>
+            </mat-form-field>
           </div>
-          <div class="col-md-6">
-            <label>Description</label>
-            <input type="text" formControlName="description" class="form-control">
+          
+          <div class="row">
+            <mat-form-field appearance="standard" style="width:300px !important">
+              <mat-label>Description</mat-label>
+              <textarea matInput type="text" formControlName="description"></textarea>
+              <mat-error *ngIf="$any(workoutForm).controls['description'].invalid">*Required</mat-error>
+            </mat-form-field>
           </div>
-        </div>
 
-        <div class="col-xs-2">
-          <label>Exercise</label>
-          <select formControlName="exercise" class="form-control">
-              <option *ngFor="let exercise of exercises" [ngValue]="exercise">{{exercise.title}}</option>
-          </select>
-        </div>
+          <div class="row">
+            <mat-form-field appearance="standard" style="width:300px !important">
+              <mat-label>Exercise Test</mat-label>
+              <mat-select formControlName="exercise">
+                <mat-option *ngFor="let exercise of exercises" [value]="exercise">
+                  {{exercise.title}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="$any(workoutForm).controls['exercise'].invalid">*Required</mat-error>
+            </mat-form-field>
+          </div>
 
-        <div class="row">
-          <div class="col-md-6">
-          <button type="submit" class="btn btn-success">
-            <mat-icon>save</mat-icon>
-          </button>
+          <div class="center row">
+            <button type="submit" [disabled]="!workoutForm.valid" class="btn btn-success">
+              <mat-icon>save</mat-icon>
+            </button>
           </div>
         </div>
       </div>

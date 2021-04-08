@@ -63,6 +63,9 @@ import { WorkoutListComponent } from './components/workout-list/workout-list.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { ExerciseSetAddComponent } from './components/exercise-set-add/exercise-set-add.component';
 
+
+import { ControlMessagesComponent } from './validation/control-messages.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,7 +79,9 @@ import { ExerciseSetAddComponent } from './components/exercise-set-add/exercise-
 
     WorkoutAddComponent,
     WorkoutListComponent,
-    ExerciseSetAddComponent
+    ExerciseSetAddComponent,
+
+    ControlMessagesComponent
   ],
   imports: [
     BrowserModule,
