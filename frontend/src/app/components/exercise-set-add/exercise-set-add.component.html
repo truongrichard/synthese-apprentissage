@@ -1,46 +1,52 @@
 <p>
-    <mat-toolbar color="primary">
-      <mat-toolbar-row>
-        <span>Exercise Set</span>
-        <span class="example-spacer"></span>
-        <button mat-icon-button>
-          <mat-icon (click)="onNoClick()">cancel</mat-icon>
-        </button>
-      </mat-toolbar-row>
-    </mat-toolbar>
-  </p>
-  <mat-card-content>
-    <div class="container">
-      <form [formGroup]="exerciseSetForm" (submit)="onSubmit()">
-        <div class="form-group">
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <span>Exercise Set</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button>
+        <mat-icon (click)="onNoClick()">cancel</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</p>
+<mat-card-content>
+  <div class="container">
+    <form [formGroup]="exerciseSetForm" (submit)="onSubmit()">
+      <div class="form-group">
+        <div class="container">
           <div class="row">
-            <div class="col-md-6">
-              <label>Repetitions</label>
-              <input type="text" formControlName="repetitions" class="form-control">
-            </div>
-            <div class="col-md-6">
-              <label>Weight</label>
-              <input type="text" formControlName="weight" class="form-control">
-            </div>
-            <div class="col-md-6">
-              <label>Time</label>
-              <input value="00:00:00" type="time" step="1" formControlName="time" class="form-control">
-            </div>
-            <div class="col-md-6">
-              <label>Distance</label>
-              <input type="text" formControlName="distance" class="form-control">
-            </div>
+            <mat-form-field appearance="standard" style="width:300px !important">
+              <mat-label>Repetitions</mat-label>
+              <input matInput type="text" formControlName="repetitions">
+            </mat-form-field>
           </div>
-  
           <div class="row">
-            <div class="col-md-6">
+            <mat-form-field appearance="standard" style="width:300px !important">
+              <mat-label>Weight</mat-label>
+              <input matInput type="text" formControlName="weight">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="standard" style="width:300px !important">
+              <mat-label>Time</mat-label>
+              <input matInput value="00:00:00" type="time" step="1" formControlName="time">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="standard" style="width:300px !important">
+              <mat-label>Distance</mat-label>
+              <input matInput type="text" formControlName="distance">
+            </mat-form-field>
+          </div>
+
+          <div class="center row">
             <button type="submit" class="btn btn-success">
               <mat-icon>save</mat-icon>
             </button>
-            </div>
           </div>
         </div>
-  
-      </form>
-    </div>
-  </mat-card-content>
+      </div>
+
+    </form>
+  </div>
+</mat-card-content>

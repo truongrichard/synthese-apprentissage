@@ -9,7 +9,7 @@ import { createNodeArray, updateIndexedAccessTypeNode } from 'typescript';
 
 
 import { MatDialog } from '@angular/material/dialog';
-import { WorkoutAddComponent } from '../workout/workout-add.component';
+import { WorkoutAddComponent } from '../workout-add/workout-add.component';
 import { ExerciseSetAddComponent } from '../exercise-set-add/exercise-set-add.component';
 import { Exercise } from 'src/app/models/exercise.model';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -176,7 +176,7 @@ export class DiaryComponent implements OnInit {
     if (workouts == null) {
       console.log(this.allDays);
       if (this.allDays){
-        console.log("DELETE DAY!");
+        //console.log("DELETE DAY!");
         const dayArray = this.allDays.filter(f => f.date == dateSearch);
         this.dayService.delete(dayArray[0].id)
             .subscribe(

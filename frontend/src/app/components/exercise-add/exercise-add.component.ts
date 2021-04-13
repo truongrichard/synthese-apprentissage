@@ -1,6 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { BodyPart, Category, Exercise } from 'src/app/models/exercise.model';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Validators } from '@angular/forms';
+
 import { ExerciseService } from 'src/app/services/exercise.service';
+
+import { BodyPart, Category } from 'src/app/models/exercise.model';
 
 @Component({
   selector: 'app-exercise-add',
@@ -8,48 +14,51 @@ import { ExerciseService } from 'src/app/services/exercise.service';
   styleUrls: ['./exercise-add.component.css']
 })
 export class ExerciseAddComponent implements OnInit {
-  exercise: Exercise = {
-    title: '',
-    description: '',
-    bodyPart: '',
-    category: '',
-  };
+
+  public exerciseForm!: FormGroup;
+
   public bodyParts = Object.values(BodyPart);
   public categories = Object.values(Category);
-  submitted = false;
 
-  constructor(private exerciseService: ExerciseService) { }
+  constructor(private _formBuilder: FormBuilder,
+  private dialogRef: MatDialogRef<ExerciseAddComponent>,
+  @Inject(MAT_DIALOG_DATA) public data: any, private exerciseService: ExerciseService) { }
 
-  ngOnInit(): void {
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
-  saveExercise(): void {
-    const data = {
-      title: this.exercise.title,
-      description: this.exercise.description,
-      bodyPart: this.exercise.bodyPart,
-      category: this.exercise.category
-    };
+  ngOnInit() {
+    this.exerciseForm = this._formBuilder.group({
+      id: [this.data.id ],
+      title: [ this.data.title, [Validators.required]],
+      description: [ this.data.description, [Validators.required]],
+      bodyPart: [ this.data.bodyPart, [Validators.required]],
+      category: [ this.data.category, [Validators.required]],
+    });
+  }
 
-    this.exerciseService.create(data)
+  onSubmit() {
+    if (isNaN(this.data.id)) {
+      console.log(this.exerciseForm.value);
+      this.newExercise();
+      this.dialogRef.close();
+    } else {
+      console.log(this.exerciseForm.value);
+      this.newExercise();
+      this.dialogRef.close();
+    }
+  }
+
+  private newExercise() {
+    this.exerciseService.create(this.exerciseForm.value)
       .subscribe(
         response => {
           console.log(response);
-          this.submitted = true;
         },
         error => {
           console.log(error);
         });
-  }
-
-  newExercise(): void {
-    this.submitted = false;
-    this.exercise = {
-      title: '',
-      description: '',
-      bodyPart: '',
-      category: '',
-    };
   }
 
 }

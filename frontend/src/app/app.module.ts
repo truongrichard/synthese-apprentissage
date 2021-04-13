@@ -58,8 +58,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { CommonModule } from '@angular/common'; 
 
 
-import { WorkoutAddComponent } from './components/workout/workout-add.component';
-import { WorkoutListComponent } from './components/workout-list/workout-list.component';
+import { WorkoutAddComponent } from './components/workout-add/workout-add.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ExerciseSetAddComponent } from './components/exercise-set-add/exercise-set-add.component';
 
@@ -78,7 +77,6 @@ import { ControlMessagesComponent } from './validation/control-messages.componen
     DiaryComponent,
 
     WorkoutAddComponent,
-    WorkoutListComponent,
     ExerciseSetAddComponent,
 
     ControlMessagesComponent

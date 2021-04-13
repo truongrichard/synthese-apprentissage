@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { ExerciseAddComponent } from '../exercise-add/exercise-add.component';
 
 @Component({
   selector: 'app-exercise-list',
   templateUrl: './exercise-list.component.html',
-  styleUrls: ['./exercise-list.component.css']
+  styleUrls: ['./exercise-list.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ExerciseListComponent implements OnInit {
   exercises?: Exercise[];
@@ -13,7 +16,9 @@ export class ExerciseListComponent implements OnInit {
   currentIndex = -1;
   title = '';
 
-  constructor(private exerciseService: ExerciseService) { }
+  isPopupOpened = true;
+
+  constructor(private dialog: MatDialog, private exerciseService: ExerciseService) { }
 
   ngOnInit(): void {
     this.retrieveExercises();
@@ -42,18 +47,6 @@ export class ExerciseListComponent implements OnInit {
     this.currentIndex = index;
   }
 
-  removeAllExercises(): void {
-    this.exerciseService.deleteAll()
-      .subscribe(
-        response => {
-          console.log(response);
-          this.refreshList();
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
   searchTitle(): void {
     this.currentExercise = undefined;
     this.currentIndex = -1;
@@ -69,12 +62,53 @@ export class ExerciseListComponent implements OnInit {
         });
   }
 
-  deleteExercise(id: string): void {
-    this.exerciseService.delete(id)
+  // WIP ...
+
+  goToYoutubeLink() {
+    window.open("https://www.youtube.com/results?search_query=" + this.currentExercise?.title + " Technique")
+  }
+
+  goToGoogleLink(){
+    window.open("https://www.google.com/search?q=" + this.currentExercise?.title + " Technique");
+  }
+
+  clearCurrenExercise() {
+    this.currentExercise = undefined;
+    this.currentIndex = -1;
+    this.retrieveExercises();
+  }
+
+  addExercise() {
+    this.isPopupOpened = true;
+    const dialogRef = this.dialog.open(ExerciseAddComponent, {
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.isPopupOpened = false;
+      this.retrieveExercises();
+    });
+  }
+
+  editExercise() {
+    this.isPopupOpened = true;
+    let exercise = this.currentExercise;
+    const dialogRef = this.dialog.open(ExerciseAddComponent, {
+      data: exercise
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.isPopupOpened = false;
+      this.clearCurrenExercise();
+    });
+  }
+
+  deleteExercise() {
+    this.exerciseService.delete(this.currentExercise!.id)
       .subscribe(
         response => {
-          console.log(response);
-          window.location.reload();
+          this.clearCurrenExercise();
+          //console.log(response);
         },
         error => {
           console.log(error);

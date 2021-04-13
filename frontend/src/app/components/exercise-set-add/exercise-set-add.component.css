@@ -1,3 +1,14 @@
 .example-spacer {
     flex: 1 1 auto;
 }
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+textarea {
+    max-height: 20em;
+}

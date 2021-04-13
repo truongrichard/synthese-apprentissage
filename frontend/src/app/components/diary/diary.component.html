@@ -28,7 +28,6 @@
 
     </div>
 
-
     <div class="col-md-6">
         <div *ngIf="currentWorkout">
 
@@ -69,10 +68,12 @@
             <table class="table">
               <thead *ngIf="exerciseSets">
                 <th>№</th>
-                <th>Repititions</th>
+                <th>Reps</th>
                 <th>Weight</th>
                 <th>Time</th>
                 <th>Distance</th>
+                <th></th>
+                <th></th>
               </thead>
               <tr *ngFor="let set of exerciseSets; let i = index">
                 <td>Set №{{i+1}}</td>
@@ -80,8 +81,8 @@
                 <td>{{set.weight}} kg</td>
                 <td>{{set.time}}</td>
                 <td>{{set.distance}} km</td>
-                <td><mat-icon (click)="editExerciseSet(set.id)">edit</mat-icon></td>
-                <td><mat-icon (click)="deleteExerciseSet(set.id)">delete</mat-icon></td>
+                <td><button mat-icon-button><mat-icon (click)="editExerciseSet(set.id)">edit</mat-icon></button></td>
+                <td><button mat-icon-button><mat-icon (click)="deleteExerciseSet(set.id)">delete</mat-icon></button></td>
             
               </tr>
             </table>
