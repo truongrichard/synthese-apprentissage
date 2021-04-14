@@ -23,7 +23,7 @@ export class ExerciseListComponent implements OnInit {
   ngOnInit(): void {
     this.retrieveExercises();
   }
-
+  
   retrieveExercises(): void {
     this.exerciseService.getAll()
       .subscribe(
@@ -114,5 +114,4 @@ export class ExerciseListComponent implements OnInit {
           console.log(error);
         });
   }
-
 }

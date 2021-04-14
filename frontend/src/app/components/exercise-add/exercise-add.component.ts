@@ -33,6 +33,7 @@ export class ExerciseAddComponent implements OnInit {
       id: [this.data.id ],
       title: [ this.data.title, [Validators.required]],
       description: [ this.data.description, [Validators.required]],
+      picByte: [ this.data.picByte, [Validators.required]],
       bodyPart: [ this.data.bodyPart, [Validators.required]],
       category: [ this.data.category, [Validators.required]],
     });
@@ -60,5 +61,4 @@ export class ExerciseAddComponent implements OnInit {
           console.log(error);
         });
   }
-
 }

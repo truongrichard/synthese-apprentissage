@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "exercises")
 public class Exercise {
+
   @Id
   private String id;
 
