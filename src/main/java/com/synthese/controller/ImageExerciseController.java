@@ -1,7 +1,9 @@
 package com.synthese.controller;
 
-import com.synthese.model.Image;
-import com.synthese.repository.ImageRepository;
+import com.synthese.model.Exercise;
+import com.synthese.model.ImageExercise;
+import com.synthese.repository.ExerciseRepository;
+import com.synthese.repository.ImageExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,7 @@ import java.util.Optional;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
-import org.springframework.http.ResponseEntity.BodyBuilder;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,27 +26,50 @@ import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping("/image")
-public class ImageController {
+@RequestMapping("/image_exercise")
+public class ImageExerciseController {
 
     @Autowired
-    private ImageRepository imageRepository;
+    private ImageExerciseRepository imageExerciseRepository;
+    @Autowired
+    private ExerciseRepository exerciseRepository;
 
-    @PostMapping("/upload")
-    public BodyBuilder uplaodImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
+    @PostMapping("/upload/{id}")
+    public ResponseEntity<ImageExercise> uploadImage(@RequestParam("imageFile") MultipartFile file, @PathVariable("id") String id) throws IOException {
         System.out.println("Original Image Byte Size - " + file.getBytes().length);
-        Image img = new Image(file.getOriginalFilename(), file.getContentType(),
-                compressBytes(file.getBytes()));
-        imageRepository.save(img);
-        return ResponseEntity.status(HttpStatus.OK);
+        try {
+            Optional<Exercise> exerciseOptional = exerciseRepository.findById(id);
+            ImageExercise img = new ImageExercise();
+            Optional<ImageExercise> optionalImage = imageExerciseRepository.findByExerciseId(id);
+            if (optionalImage.isPresent()) {
+                img = optionalImage.get();
+                img.setName(file.getOriginalFilename());
+                img.setType(file.getContentType());
+                img.setPicByte(compressBytes(file.getBytes()));
+                img.setExercise(exerciseOptional.get());
+            }
+            else {
+                img = new ImageExercise(file.getOriginalFilename(), file.getContentType(), compressBytes(file.getBytes()));
+                img.setExercise(exerciseOptional.get());
+            }
+            ImageExercise newImageExercise = imageExerciseRepository.save(img);
+            return new ResponseEntity<>(newImageExercise, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @GetMapping(path = { "/get/{imageName}" })
-    public Image getImage(@PathVariable("imageName") String imageName) throws IOException {
-        final Optional<Image> retrievedImage = imageRepository.findByName(imageName);
-        Image img = new Image(retrievedImage.get().getName(), retrievedImage.get().getType(),
-                decompressBytes(retrievedImage.get().getPicByte()));
-        return img;
+    @GetMapping(path = { "/get/{id}" })
+    public ResponseEntity<ImageExercise> getImage(@PathVariable("id") String id) throws IOException {
+        Optional<ImageExercise> optionalImage = imageExerciseRepository.findByExerciseId(id);
+
+        if (optionalImage.isPresent()) {
+            ImageExercise retrievedImageExercise = new ImageExercise(optionalImage.get().getName(), optionalImage.get().getType(),
+                                            decompressBytes(optionalImage.get().getPicByte()));
+            return new ResponseEntity<>(retrievedImageExercise, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // compress the image bytes before storing it in the database

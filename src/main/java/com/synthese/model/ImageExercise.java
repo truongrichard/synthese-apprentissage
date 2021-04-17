@@ -3,26 +3,25 @@ package com.synthese.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "image_table")
-public class Image {
-
-    public Image() {
-        super();
-    }
-
-    public Image(String name, String type, byte[] picByte) {
-        this.name = name;
-        this.type = type;
-        this.picByte = picByte;
-    }
+@Document(collection = "image_exercise")
+public class ImageExercise {
 
     @Id
     private String id;
     private String name;
     private String type;
-    // size problem maybe ?
     private byte[] picByte;
     private Exercise exercise;
+
+    public ImageExercise() {
+
+    }
+
+    public ImageExercise(String name, String type, byte[] picByte) {
+        this.name = name;
+        this.type = type;
+        this.picByte = picByte;
+    }
 
     public String getName() {
         return name;
