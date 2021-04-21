@@ -1,0 +1,38 @@
+<p>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <span>Add exercise image</span>
+        <span class="example-spacer"></span>
+        <button mat-icon-button>
+          <mat-icon (click)="onNoClick()">cancel</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </p>
+  <mat-card-content>
+    <div class="container">
+      <form (submit)="onSubmit()">
+        <div class="form-group">
+          <div class="container">
+
+            <div class="row">
+                <input type="file" (change)="onFileChanged($event)" accept="image/jpeg, image/png">
+            </div>
+            
+            <div class="row">
+                <div *ngIf=selectedFile>
+                    <img [src]="previewUrl" height="300">
+                </div>
+            </div>
+            <br>
+            <div class="center row">
+              <button type="submit" [disabled]="!selectedFile" class="btn btn-success">
+                <mat-icon>save</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+  
+      </form>
+    </div>
+  </mat-card-content>

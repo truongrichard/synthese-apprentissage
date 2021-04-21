@@ -65,6 +65,7 @@ import { ExerciseSetAddComponent } from './components/exercise-set-add/exercise-
 
 import { ControlMessagesComponent } from './validation/control-messages.component';
 import { ImageAddComponent } from './components/image-add/image-add.component';
+import { ImageExerciseAddComponent } from './components/image-exercise-add/image-exercise-add.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,9 @@ import { ImageAddComponent } from './components/image-add/image-add.component';
 
     ControlMessagesComponent,
 
-    ImageAddComponent
+    ImageAddComponent,
+
+    ImageExerciseAddComponent
   ],
   imports: [
     BrowserModule,

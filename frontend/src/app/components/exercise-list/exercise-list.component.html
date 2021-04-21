@@ -51,7 +51,7 @@
             <mat-card-header>
               <div mat-card-avatar>
                 <button mat-icon-button>
-                  <mat-icon >add_a_photo</mat-icon>
+                  <mat-icon (click)="addImageExercise()">add_a_photo</mat-icon>
                 </button>
               </div>
               <mat-card-title>{{ currentExercise.title }}</mat-card-title>
@@ -62,8 +62,12 @@
               </button>
               <mat-card-subtitle>{{ currentExercise.bodyPart }} - {{ currentExercise.category }}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image src="assets/images/no_image.png" alt="Image of placeholder exercise">
-            <!-- <img mat-card-image src={{retrievedImage}}/> -->
+            <div *ngIf="!retrieveResonse">
+              <img mat-card-image src="assets/images/no_image.png" alt="Image of placeholder exercise">
+            </div>
+            <div *ngIf="retrieveResonse">
+              <img mat-card-image src={{retrievedImageExercise}} alt="Image of placeholder exercise"/>
+            </div>
             <mat-card-content>
               {{ currentExercise.description }}
             </mat-card-content>

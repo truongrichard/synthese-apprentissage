@@ -68,7 +68,7 @@ public class ImageExerciseController {
                                             decompressBytes(optionalImage.get().getPicByte()));
             return new ResponseEntity<>(retrievedImageExercise, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         }
     }
 

@@ -2,7 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { ImageExerciseService } from 'src/app/services/imageExercise.service';
 import { ExerciseAddComponent } from '../exercise-add/exercise-add.component';
+import { ImageExerciseAddComponent } from '../image-exercise-add/image-exercise-add.component';
 
 @Component({
   selector: 'app-exercise-list',
@@ -17,8 +19,12 @@ export class ExerciseListComponent implements OnInit {
   title = '';
 
   isPopupOpened = true;
+  
+  retrievedImageExercise: any;
+  base64Data: any;
+  retrieveResonse: any;
 
-  constructor(private dialog: MatDialog, private exerciseService: ExerciseService) { }
+  constructor(private dialog: MatDialog, private exerciseService: ExerciseService, private imageExerciseService: ImageExerciseService) { }
 
   ngOnInit(): void {
     this.retrieveExercises();
@@ -45,6 +51,7 @@ export class ExerciseListComponent implements OnInit {
   setActiveExercise(exercise: Exercise, index: number): void {
     this.currentExercise = exercise;
     this.currentIndex = index;
+    this.getImage();
   }
 
   searchTitle(): void {
@@ -63,6 +70,32 @@ export class ExerciseListComponent implements OnInit {
   }
 
   // WIP ...
+
+  getImage() {
+    this.imageExerciseService.get(this.currentExercise?.id)
+      .subscribe(
+        res => {
+          console.log(res);
+          this.retrieveResonse = res;
+          if (res != null){
+            this.base64Data = this.retrieveResonse.picByte;
+            this.retrievedImageExercise = 'data:image/jpeg;base64,' + this.base64Data;
+          }
+        }
+      );
+  }
+
+  addImageExercise() {
+    this.isPopupOpened = true;
+    const dialogRef = this.dialog.open(ImageExerciseAddComponent, {
+      data: {exerciseId: this.currentExercise?.id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.isPopupOpened = false;
+      this.retrieveExercises();
+    });
+  }
 
   goToYoutubeLink() {
     window.open("https://www.youtube.com/results?search_query=" + this.currentExercise?.title + " Technique")
