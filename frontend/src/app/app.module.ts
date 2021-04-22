@@ -64,8 +64,12 @@ import { ExerciseSetAddComponent } from './components/exercise-set-add/exercise-
 
 
 import { ControlMessagesComponent } from './validation/control-messages.component';
-import { ImageAddComponent } from './components/image-add/image-add.component';
 import { ImageExerciseAddComponent } from './components/image-exercise-add/image-exercise-add.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LeftMenuComponent } from './components/left-menu/left-menu.component';
+
+
+import { SidenavService } from './services/sidenav.service'
 
 @NgModule({
   declarations: [
@@ -83,9 +87,11 @@ import { ImageExerciseAddComponent } from './components/image-exercise-add/image
 
     ControlMessagesComponent,
 
-    ImageAddComponent,
+    ImageExerciseAddComponent,
 
-    ImageExerciseAddComponent
+    HeaderComponent,
+
+    LeftMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -134,7 +140,7 @@ import { ImageExerciseAddComponent } from './components/image-exercise-add/image
 
         CommonModule
     ],
-  providers: [],
+  providers: [SidenavService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

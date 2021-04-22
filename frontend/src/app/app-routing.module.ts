@@ -6,7 +6,6 @@ import { AddTutorialComponent } from './components/add-tutorial/add-tutorial.com
 import { HistoryComponent } from './components/history/history.component';
 import { ExerciseListComponent } from './components/exercise-list/exercise-list.component';
 import { DiaryComponent } from './components/diary/diary.component';
-import { ImageAddComponent } from './components/image-add/image-add.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'tutorials', pathMatch: 'full' },
@@ -15,8 +14,7 @@ const routes: Routes = [
   { path: 'add', component: AddTutorialComponent },
   { path: 'history', component: HistoryComponent },
   { path: 'diary', component: DiaryComponent },
-  { path: 'listExercise', component: ExerciseListComponent },
-  { path: 'image', component: ImageAddComponent }
+  { path: 'listExercise', component: ExerciseListComponent }
 ];
 
 @NgModule({

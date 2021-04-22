@@ -1,3 +1,4 @@
+<!--
 <div>
   <nav class="navbar navbar-expand navbar-dark bg-dark">
     <a href="#" class="navbar-brand">Workout Journal</a>
@@ -17,13 +18,31 @@
       <li class="nav-item">
         <a routerLink="listExercise" class="nav-link">Exercises</a>
       </li>
-      <li class="nav-item">
-        <a routerLink="image" class="nav-link">Image Test</a>
-      </li>
     </div>
   </nav>
 
   <div class="container mt-3">
     <router-outlet></router-outlet>
   </div>
+</div>
+-->
+
+<div>
+  <app-header [sidenav]="leftSidenav"></app-header>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #leftSidenav mode="side" opened>
+      <app-left-menu></app-left-menu>
+    </mat-sidenav>
+    <mat-sidenav-content [@onMainContentChange]="onSideNavChange ? 'open': 'close'">
+      <div class="main_content">
+        <div class="container mt-3">
+          
+          <router-outlet></router-outlet>
+
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
 </div>

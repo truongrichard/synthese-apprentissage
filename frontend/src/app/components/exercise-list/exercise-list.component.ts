@@ -35,7 +35,6 @@ export class ExerciseListComponent implements OnInit {
       .subscribe(
         data => {
           this.exercises = data;
-          console.log(data);
         },
         error => {
           console.log(error);
@@ -62,7 +61,6 @@ export class ExerciseListComponent implements OnInit {
       .subscribe(
         data => {
           this.exercises = data;
-          console.log(data);
         },
         error => {
           console.log(error);
@@ -75,7 +73,6 @@ export class ExerciseListComponent implements OnInit {
     this.imageExerciseService.get(this.currentExercise?.id)
       .subscribe(
         res => {
-          console.log(res);
           this.retrieveResonse = res;
           if (res != null){
             this.base64Data = this.retrieveResonse.picByte;
@@ -93,7 +90,7 @@ export class ExerciseListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.isPopupOpened = false;
-      this.retrieveExercises();
+      this.clearCurrenExercise();
     });
   }
 
@@ -141,7 +138,6 @@ export class ExerciseListComponent implements OnInit {
       .subscribe(
         response => {
           this.clearCurrenExercise();
-          //console.log(response);
         },
         error => {
           console.log(error);
