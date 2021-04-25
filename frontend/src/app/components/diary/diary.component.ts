@@ -5,14 +5,11 @@ import { ExerciseSet } from 'src/app/models/exerciseSet.model';
 import { DayService } from 'src/app/services/day.service';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { ExerciseSetService } from 'src/app/services/exerciseSet.service';
-import { createNodeArray, updateIndexedAccessTypeNode } from 'typescript';
-
 
 import { MatDialog } from '@angular/material/dialog';
 import { WorkoutAddComponent } from '../workout-add/workout-add.component';
 import { ExerciseSetAddComponent } from '../exercise-set-add/exercise-set-add.component';
 import { Exercise } from 'src/app/models/exercise.model';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-diary',
@@ -59,7 +56,6 @@ export class DiaryComponent implements OnInit {
       .subscribe(
         data => {
           this.allDays = data;
-          //console.log(data);
         },
         error => {
           console.log(error);
@@ -72,7 +68,6 @@ export class DiaryComponent implements OnInit {
       .subscribe(
         data => {
           this.searchedWorkouts = data;
-          //console.log(data);
         },
         error => {
           console.log(error);
@@ -97,7 +92,6 @@ export class DiaryComponent implements OnInit {
       .subscribe(
         data => {
           this.exerciseSets = data;
-          //console.log(data);
         },
         error => {
           console.log(error);
@@ -139,7 +133,6 @@ export class DiaryComponent implements OnInit {
     this.workoutService.delete(this.currentWorkout!.id)
       .subscribe(
         response => {
-          //console.log(response);
           this.clearCurrentWorkout();
           this.updateWorkoutsForCurrentDay();
         },
@@ -154,7 +147,6 @@ export class DiaryComponent implements OnInit {
         data => {
           this.searchedWorkouts = data;
           this.checkDayExist(data);
-          //console.log(data);
         },
         error => {
           console.log(error);
@@ -176,7 +168,6 @@ export class DiaryComponent implements OnInit {
     if (workouts == null) {
       console.log(this.allDays);
       if (this.allDays){
-        //console.log("DELETE DAY!");
         const dayArray = this.allDays.filter(f => f.date == dateSearch);
         this.dayService.delete(dayArray[0].id)
             .subscribe(
@@ -195,7 +186,6 @@ export class DiaryComponent implements OnInit {
     this.dayService.create(updateDay)
       .subscribe(
         response => {
-          //console.log(response);
           this.retrieveAllDays();
         },
         error => {
@@ -210,7 +200,6 @@ export class DiaryComponent implements OnInit {
     this.dayService.create(newDay)
       .subscribe(
         response => {
-          //console.log(response);
           this.retrieveAllDays();
         },
         error => {
@@ -247,7 +236,6 @@ export class DiaryComponent implements OnInit {
     this.exerciseSetService.delete(id!)
       .subscribe(
         response => {
-          //console.log(response);
           this.searchForExerciseSets();
         },
         error => {

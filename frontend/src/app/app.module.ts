@@ -5,9 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AddTutorialComponent } from './components/add-tutorial/add-tutorial.component';
-import { TutorialDetailsComponent } from './components/tutorial-details/tutorial-details.component';
-import { TutorialsListComponent } from './components/tutorials-list/tutorials-list.component';
 import { HistoryComponent } from './components/history/history.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -69,14 +66,14 @@ import { HeaderComponent } from './components/header/header.component';
 import { LeftMenuComponent } from './components/left-menu/left-menu.component';
 
 
-import { SidenavService } from './services/sidenav.service'
+import { SidenavService } from './services/sidenav.service';
+import { MeasurementListComponent } from './components/measurement-list/measurement-list.component';
+import { MeasurementAddComponent } from './components/measurement-add/measurement-add.component'
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddTutorialComponent,
-    TutorialDetailsComponent,
-    TutorialsListComponent,
     HistoryComponent,
     ExerciseAddComponent,
     ExerciseListComponent,
@@ -90,8 +87,9 @@ import { SidenavService } from './services/sidenav.service'
     ImageExerciseAddComponent,
 
     HeaderComponent,
-
-    LeftMenuComponent
+    LeftMenuComponent,
+    MeasurementListComponent,
+    MeasurementAddComponent
   ],
   imports: [
     BrowserModule,

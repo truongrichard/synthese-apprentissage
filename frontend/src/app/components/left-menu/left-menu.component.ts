@@ -20,9 +20,8 @@ export class LeftMenuComponent implements OnInit {
   public linkText: boolean = false;
 
   public pages: Page[] = [
-    {name: 'Tutorials', link:'tutorials', icon: 'report'},
-    {name: 'Add', link:'add', icon: 'report'},
     {name: 'History', link:'history', icon: 'event'},
+    {name: 'Measurements', link:'measurement', icon: 'show_chart'},
     {name: 'Diary', link:'diary', icon: 'description'},
     {name: 'Exercises', link:'listExercise', icon: 'fitness_center'},
   ]

@@ -5,7 +5,8 @@ import { onMainContentChange } from './animations/animations';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [ onMainContentChange ]
 })
 export class AppComponent {
   title = 'Angular 11 Crud';

@@ -19,12 +19,6 @@ public class Exercise {
 
   }
 
-  public Exercise(String title, String description, BodyPart bodyPart) {
-    this.title = title;
-    this.description = description;
-    this.bodyPart = bodyPart;
-  }
-
   public String getId() {
     return id;
   }

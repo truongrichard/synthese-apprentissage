@@ -6,8 +6,9 @@ import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView,} from 'angu
 
 import { Router } from '@angular/router';
 
-import { Tutorial } from 'src/app/models/tutorial.model';
-import { TutorialService } from 'src/app/services/tutorial.service';
+import { Day } from 'src/app/models/day.model';
+import { DayService } from 'src/app/services/day.service';
+import { Workout } from 'src/app/models/workout.model';
 
 const colors: any = {
   red: {
@@ -55,30 +56,40 @@ export class HistoryComponent implements OnInit {
 
     activeDayIsOpen: boolean = true;
 
-    tutorials: any;
+    days: any;
 
-    constructor(private modal: NgbModal, private router: Router, private tutorialService: TutorialService) {}
+    constructor(private modal: NgbModal, private router: Router, private dayService: DayService) {}
 
     async ngOnInit() {
-      await this.tutorialService.getAll()
+      await this.dayService.getAll()
         .toPromise().then(
           data => {
-            this.tutorials = data;
-            this.tutorials.forEach(async (element: Tutorial) => {
-              await this.addEvent(element);
+            this.days = data;
+            this.days.forEach(async (element: Day) => {
+              await this.addEventDay(element);
             });
           },
           error => {
             console.log(error);
           });
-
     }
 
-    async addEvent(element: Tutorial) {
+    async addEventDay(element: Day) {
+
+      let workouts = element.workouts;
+
+      console.log(workouts?.length);
+      workouts!.forEach(async (element: Workout) => {
+        await this.addEventWorkout(element);
+      });
+    }
+    
+    addEventWorkout(element: Workout) {
       const offSetUTC = new Date().getTimezoneOffset() * 60000;
   
       let dateString = "" + element.date;
       const date = new Date(dateString);
+
       
       this.events = [
         ...this.events,
@@ -87,7 +98,7 @@ export class HistoryComponent implements OnInit {
             title: "" + element.title,
             id: "" + element.id,
             meta: {
-              description: "TESTING"
+              description: element.description
             }
           }
       ];
@@ -112,12 +123,6 @@ export class HistoryComponent implements OnInit {
       let description = event.meta.description;
       this.modalData = { title, description, event };
       this.modal.open(this.modalContent, { size: 'lg' });
-      /*
-      console.log(event.id);
-      if (event.id != undefined) {
-        this.router.navigateByUrl('/tutorials/' + event.id);
-      }
-      */
     }
 
     setView(view: CalendarView) {

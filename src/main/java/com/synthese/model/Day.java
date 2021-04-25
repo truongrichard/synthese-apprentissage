@@ -10,8 +10,9 @@ import java.util.List;
 public class Day {
     @Id
     private String id;
-    private List<Workout> workouts;
     private LocalDate date;
+    private List<Workout> workouts;
+    private List<Measurement> measurements;
 
     public Day() {
 
@@ -35,5 +36,13 @@ public class Day {
 
     public void setWorkouts(List<Workout> workouts) {
         this.workouts = workouts;
+    }
+
+    public List<Measurement> getMeasurements() {
+        return measurements;
+    }
+
+    public void setMeasurements(List<Measurement> measurements) {
+        this.measurements = measurements;
     }
 }
