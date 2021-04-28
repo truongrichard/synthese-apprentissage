@@ -5,13 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HistoryComponent } from './components/history/history.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlatpickrModule } from 'angularx-flatpickr';
 import { ExerciseAddComponent } from './components/exercise-add/exercise-add.component';
 import { ExerciseListComponent } from './components/exercise-list/exercise-list.component';
 import { DiaryComponent } from './components/diary/diary.component';
@@ -68,13 +63,13 @@ import { LeftMenuComponent } from './components/left-menu/left-menu.component';
 
 import { SidenavService } from './services/sidenav.service';
 import { MeasurementListComponent } from './components/measurement-list/measurement-list.component';
-import { MeasurementAddComponent } from './components/measurement-add/measurement-add.component'
+import { MeasurementAddComponent } from './components/measurement-add/measurement-add.component';
 
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HistoryComponent,
     ExerciseAddComponent,
     ExerciseListComponent,
     DiaryComponent,
@@ -98,9 +93,7 @@ import { MeasurementAddComponent } from './components/measurement-add/measuremen
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-    FlatpickrModule.forRoot(),
-    NgbModule,           
+    ChartsModule,       
         MatAutocompleteModule,
         MatBadgeModule,
         MatButtonModule,

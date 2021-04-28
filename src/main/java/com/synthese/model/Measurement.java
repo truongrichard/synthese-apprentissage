@@ -11,8 +11,7 @@ public class Measurement {
     @Id
     private String id;
 
-    private String title;
-    private String description;
+    private String value;
     private LocalDate date;
     private Exercise.Category category;
 
@@ -24,20 +23,12 @@ public class Measurement {
         return id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getValue() {
+        return value;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public LocalDate getDate() {

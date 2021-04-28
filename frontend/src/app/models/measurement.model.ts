@@ -1,7 +1,6 @@
 export class Measurement {
     id?: any;
-    title?: string;
-    description?: string;
+    value?: string;
     date?: string;
     category?: string;
 }

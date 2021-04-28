@@ -67,8 +67,6 @@ export class ExerciseListComponent implements OnInit {
         });
   }
 
-  // WIP ...
-
   getImage() {
     this.imageExerciseService.get(this.currentExercise?.id)
       .subscribe(

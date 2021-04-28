@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HistoryComponent } from './components/history/history.component';
 import { MeasurementListComponent } from './components/measurement-list/measurement-list.component';
 import { ExerciseListComponent } from './components/exercise-list/exercise-list.component';
 import { DiaryComponent } from './components/diary/diary.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'diary', pathMatch: 'full' },
-  { path: 'history', component: HistoryComponent },
   { path: 'measurement', component: MeasurementListComponent },
   { path: 'diary', component: DiaryComponent },
   { path: 'listExercise', component: ExerciseListComponent }

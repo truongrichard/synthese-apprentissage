@@ -112,6 +112,9 @@ export class DiaryComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.isPopupOpened = false;
       this.updateWorkoutsForCurrentDay();
+      
+      this.retrieveAllDays();
+      this.searchForWorkouts();
     });
   }
 
