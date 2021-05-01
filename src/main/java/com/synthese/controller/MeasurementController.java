@@ -52,7 +52,7 @@ public class MeasurementController {
         }
     }
 
-    @GetMapping("/get/{category}")
+    @GetMapping("/getCategory/{category}")
     public ResponseEntity<List<Measurement>> getByCategory(@PathVariable("category") String category) {
         try {
             List<Measurement> measurements = new ArrayList<Measurement>();

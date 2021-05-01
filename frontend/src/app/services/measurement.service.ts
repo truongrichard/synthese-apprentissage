@@ -37,6 +37,6 @@ export class MeasurementService {
   }
 
   findByCategory(category: any): Observable<Measurement[]> {
-    return this.http.get<Measurement[]>(baseUrl + "/get/" + category);
+    return this.http.get<Measurement[]>(baseUrl + "/getCategory/" + category);
   }
 }

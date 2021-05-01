@@ -13,7 +13,7 @@ public class Measurement {
 
     private String value;
     private LocalDate date;
-    private Exercise.Category category;
+    private Category category;
 
     public Measurement() {
 
@@ -39,9 +39,9 @@ public class Measurement {
         this.date = date;
     }
 
-    public Exercise.Category getCategory() { return category; }
+    public Category getCategory() { return category; }
 
-    public void setCategory(Exercise.Category category) { this.category = category; }
+    public void setCategory(Category category) { this.category = category; }
 
     public enum Category {
         WEIGHT,

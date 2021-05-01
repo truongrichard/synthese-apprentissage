@@ -1,13 +1,58 @@
-<p>TO-DO WITH CHARTS, SELECT CATEGORY + POPUP ADD MEASUREMENT !</p>
+<mat-form-field appearance="standard" style="width:300px !important">
+    <mat-label>Category</mat-label>
+    <mat-select [(ngModel)]="selectedCategory" (selectionChange)="onCategoryChanged()">
+        <mat-option *ngFor="let categorie of categories" [value]="categorie">
+            {{categorie}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
 
-<div class="chart-wrapper">
-    <canvas baseChart 
-        [datasets]="lineChartData" 
-        [labels]="lineChartLabels" 
-        [options]="lineChartOptions"
-        [colors]="lineChartColors" 
-        [legend]="lineChartLegend" 
-        [chartType]="lineChartType" 
-        [plugins]="lineChartPlugins">
-    </canvas>
+<div class="list row">
+    <div class="col-md-4">
+        <mat-toolbar>
+          <mat-toolbar-row>
+            <span>Measurement List</span>
+            <button mat-icon-button *ngIf="selectedCategory">
+              <mat-icon (click)="addMeasurement()">add_circle</mat-icon>
+            </button>
+          </mat-toolbar-row>
+        </mat-toolbar>
+        
+        <mat-card-content>
+            <div class="container">
+              <table class="table">
+                <thead *ngIf="measurements">
+                  <th>Date</th>
+                  <th>Value</th>
+                  <th></th>
+                </thead>
+                <tbody class="table-txt-blue" >
+                <tr *ngFor="let measurement of sortData; let i = index">
+                  <td>{{measurement.date}}</td>
+                  <td>{{measurement.value}}</td>
+                  <td><button mat-icon-button>
+                      <mat-icon (click)="editMeasurement(measurement.id)">edit</mat-icon>
+                      <mat-icon (click)="deleteMeasurement(measurement.id)">delete</mat-icon>
+                      </button>
+                  </td>
+              
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-card-content>
+    </div>
+
+    <div class="col-md-8">
+        <div style="display: block;">
+            <canvas baseChart 
+              [datasets]="lineChartData"
+              [options]="lineChartOptions"
+              [plugins]="lineChartPlugins"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType">
+            </canvas>
+        </div>
+    </div>
 </div>
+

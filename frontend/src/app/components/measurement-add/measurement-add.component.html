@@ -1,1 +1,42 @@
-<p>measurement-add works!</p>
+<p>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <span>Measurement</span>
+        <span class="example-spacer"></span>
+        <button mat-icon-button>
+          <mat-icon (click)="onNoClick()">cancel</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </p>
+  <mat-card-content>
+    <div class="container">
+      <form [formGroup]="measurementForm" (submit)="onSubmit()">
+        <div class="form-group">
+          <div class="container">
+            <div class="row">
+              <mat-form-field appearance="standard" style="width:300px !important">
+                <mat-label>Value</mat-label>
+                <input matInput type="text" formControlName="value">
+                <mat-error *ngIf="$any(measurementForm).controls['value'].invalid">*Required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="standard" style="width:300px !important">
+                  <mat-label>Date</mat-label>
+                  <input matInput type="date" formControlName="date">
+                  <mat-error *ngIf="$any(measurementForm).controls['date'].invalid">*Required</mat-error>
+                </mat-form-field>
+            </div>
+  
+            <div class="center row">
+              <button type="submit" [disabled]="!measurementForm.valid" class="btn btn-success">
+                <mat-icon>save</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+  
+      </form>
+    </div>
+  </mat-card-content>
