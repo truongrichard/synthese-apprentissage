@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Measurement } from 'src/app/models/measurement.model';
@@ -6,6 +6,8 @@ import { MeasurementService } from 'src/app/services/measurement.service';
 import { MeasurementAddComponent } from '../measurement-add/measurement-add.component';
 
 import { Category } from 'src/app/models/measurement.model';
+
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-measurement-list',
@@ -24,27 +26,25 @@ export class MeasurementListComponent implements OnInit {
 
   public categories = Object.values(Category);
 
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+
   constructor(private dialog: MatDialog, private measurementService: MeasurementService,) { }
 
   ngOnInit(): void {
-    this.retrieveMeasurements();
+    this.retrieveMeasurements(); 
   }
 
   onCategoryChanged() {
     this.retrieveMeasurements();
-    this.insertMeasurementsInChart();
+    this.changeLineChartData();
+    this.addMinAndMaxInLineChart(this.measurements);
+    (<any>this.chart).refresh()
   }
   
   get sortData() {
-
     if (this.measurements){
-      const selectedMesurmentsByCategory = this.measurements.filter(f => f.category == this.selectedCategory);
-      if (selectedMesurmentsByCategory.length == 0) {
-        this.lineChartData = [ { data: [ ] } ];
-      }
-      return selectedMesurmentsByCategory.sort((a, b) => {
-        return <any>new Date(a.date) - <any>new Date(b.date);
-      });
+      let selectedMesurmentsByCategory = this.measurements.filter(f => f.category == this.selectedCategory);
+      return this.sortMeasurementsByDate(selectedMesurmentsByCategory)
     } 
   }
 
@@ -59,28 +59,10 @@ export class MeasurementListComponent implements OnInit {
         });
   }
 
-  insertMeasurementsInChart() {
-    //console.log(this.measurements);
+  changeLineChartData() {
     if (this.measurements) {
-      const selectedMesurmentsByCategory = this.measurements.filter(f => f.category == this.selectedCategory);
-      if (selectedMesurmentsByCategory.length == 0) {
-        this.lineChartData = [ { data: [ ] } ];
-        this.measurements = selectedMesurmentsByCategory;
-      }
-      else{
-        selectedMesurmentsByCategory.sort((a, b) => {
-          return <any>new Date(a.date) - <any>new Date(b.date);
-        });
-      }
-      //console.log(selectedMesurmentsByCategory);
-      this.lineChartData = [ { data: [ ] } ];
-      for (let index = 0; index < selectedMesurmentsByCategory.length; index++) {
-        
-        var dateUTC = new Date(selectedMesurmentsByCategory[index].date);
-        dateUTC.setTime(dateUTC.getTime() + dateUTC.getTimezoneOffset() * 60 * 1000);
-
-        this.lineChartData[0].data[index] = { x: new Date(dateUTC), y: selectedMesurmentsByCategory[index].value };
-      }
+      let selectedMesurmentsByCategory = this.sortDataByDate(this.measurements);
+      this.insertMeasurementsInLineChart(selectedMesurmentsByCategory);
     }
   }
 
@@ -92,12 +74,11 @@ export class MeasurementListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.isPopupOpened = false;
-      this.updateLineChart();
       this.retrieveMeasurements();
+      this.updateLineChart();
     });
   }
 
-  // WIP
   editMeasurement(id: any) {
     this.isPopupOpened = true;
     let measurement = this.getMeasurement(id)[0];
@@ -113,12 +94,9 @@ export class MeasurementListComponent implements OnInit {
   }
 
   getMeasurement(id?: string) {
-    if (this.measurements) {
+    if (this.measurements) 
       return this.measurements.filter(x => x.id === id);
-    }
-    else{
-      return "";
-    }
+    return "";
   }
 
   deleteMeasurement(id?: any) {
@@ -133,34 +111,13 @@ export class MeasurementListComponent implements OnInit {
         });
   }
 
-  // WIP
   updateLineChart() {
     this.measurementService.getAll()
       .subscribe(
         data => {
           if (data) {
-            
-            //console.log(data);
-            const selectedMesurmentsByCategory = data.filter(f => f.category == this.selectedCategory);
-            if (selectedMesurmentsByCategory.length == 0) {
-              this.lineChartData = [ { data: [ ] } ];
-              this.measurements = selectedMesurmentsByCategory;
-            }
-
-            selectedMesurmentsByCategory.sort((a, b) => {
-              return <any>new Date(a.date) - <any>new Date(b.date);
-            });
-
-            //console.log(selectedMesurmentsByCategory);
-            this.lineChartData = [ { data: [ ] } ];
-
-            for (let index = 0; index < selectedMesurmentsByCategory.length; index++) {
-
-              var dateUTC = new Date(selectedMesurmentsByCategory[index].date);
-              dateUTC.setTime(dateUTC.getTime() + dateUTC.getTimezoneOffset() * 60 * 1000);
-
-              this.lineChartData[0].data[index] = { x: new Date(dateUTC), y: selectedMesurmentsByCategory[index].value };
-            }
+            let selectedMesurmentsByCategory = this.sortDataByDate(data);
+            this.insertMeasurementsInLineChart(selectedMesurmentsByCategory);
           }
         },
         error => {
@@ -168,9 +125,47 @@ export class MeasurementListComponent implements OnInit {
     });
   }
 
-  public lineChartData: ChartDataSets[] = [
-    { data: [ ] }
-  ];
+  private sortDataByDate(data: Measurement[]) {
+    let selectedMesurmentsByCategory = data.filter(f => f.category == this.selectedCategory);
+    if (selectedMesurmentsByCategory.length == 0) {
+      this.lineChartData = [{ data: [] }];
+      this.measurements = selectedMesurmentsByCategory;
+    }
+    else {
+      return this.sortMeasurementsByDate(selectedMesurmentsByCategory);
+    }
+    return selectedMesurmentsByCategory;
+  }
+
+  private sortMeasurementsByDate(measurementsData: Measurement[]) {
+    return measurementsData.sort((a, b) => {
+      return <any>new Date(a.date) - <any>new Date(b.date);
+    });
+  }
+
+  private insertMeasurementsInLineChart(measurementsData: Measurement[]) {
+    this.lineChartData = [ { data: [ ] } ];
+    this.addMinAndMaxInLineChart(measurementsData);
+    for (let index = 0; index < measurementsData.length; index++) {
+      this.lineChartData[0].data[index] = { x: this.addOffsetUTC(measurementsData, index), y: measurementsData[index].value };
+    }
+  }
+
+  private addMinAndMaxInLineChart(measurementsData: Measurement[]) {
+    if (measurementsData.length > 0) {
+      let yAxesMin = Math.min.apply(Math, measurementsData.map(function (o) { return o.value; }));
+      let yAxesMax = Math.max.apply(Math, measurementsData.map(function (o) { return o.value; }));
+      this.lineChartOptions.scales.yAxes[0].ticks.suggestedMin = (yAxesMin - 10);
+      this.lineChartOptions.scales.yAxes[0].ticks.suggestedMax = (yAxesMax + 10);
+    }
+  }
+
+  private addOffsetUTC(measurementsData: Measurement[], index: number) {
+    var dateUTC = new Date(measurementsData[index].date);
+    return dateUTC.setTime(dateUTC.getTime() + dateUTC.getTimezoneOffset() * 60 * 1000);
+  }
+
+  public lineChartData: ChartDataSets[] = [ { data: [ ] } ];
 
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -179,19 +174,18 @@ export class MeasurementListComponent implements OnInit {
         type: 'time',
         time: {
           displayFormats: {
-          	'millisecond': 'MMM DD',
-            'second': 'MMM DD',
-            'minute': 'MMM DD',
-            'hour': 'MMM DD',
             'day': 'MMM DD',
             'week': 'MMM DD',
             'month': 'MMM DD',
-            'quarter': 'MMM DD',
             'year': 'MMM DD',
           },
           unit: 'week',
         }
       }],
+      yAxes: [{
+        ticks: {
+        }
+      }]
     }
   };
 
