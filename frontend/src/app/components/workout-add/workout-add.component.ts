@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Validators } from '@angular/forms';
 
 
@@ -50,7 +50,6 @@ export class WorkoutAddComponent implements OnInit {
       .subscribe(
         data => {
           this.exercises = data;
-          console.log(data);
         },
         error => {
           console.log(error);
@@ -58,20 +57,14 @@ export class WorkoutAddComponent implements OnInit {
   }
 
   onSubmit() {
-    if (isNaN(this.data.id)) {
-      this.newWorkout();
-      this.dialogRef.close();
-    } else {
-      this.newWorkout();
-      this.dialogRef.close();
-    }
+    this.newWorkout();
+    this.dialogRef.close();
   }
 
   private newWorkout() {
     this.workoutService.create(this.workoutForm.value)
       .subscribe(
         response => {
-          console.log(response);
         },
         error => {
           console.log(error);

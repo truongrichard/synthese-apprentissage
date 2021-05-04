@@ -18,8 +18,6 @@ import { BaseChartDirective } from 'ng2-charts';
 
 export class MeasurementListComponent implements OnInit {
 
-  offSetUTC = new Date().getTimezoneOffset() * 60000;
-
   measurements?: Measurement[];
   isPopupOpened = true;
   selectedCategory = '';

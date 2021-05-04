@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Day } from 'src/app/models/day.model';
 import { Workout } from 'src/app/models/workout.model';
 import { ExerciseSet } from 'src/app/models/exerciseSet.model';
@@ -137,14 +137,58 @@ export class DiaryComponent implements OnInit {
       .subscribe(
         response => {
           this.clearCurrentWorkout();
-          this.updateWorkoutsForCurrentDay();
+          this.updateWorkoutsForCurrentDayV2();
+          this.searchForWorkouts();
+          this.retrieveAllDays();
         },
         error => {
           console.log(error);
         });
   }
 
-  updateWorkoutsForCurrentDay() {
+  private updateWorkoutsForCurrentDayV2() {
+    this.workoutService.findByDate(this.convert(this.startDate.toString()))
+      .subscribe(
+        data => {
+          this.searchedWorkouts = data;
+          this.deleteDayWhenNoWorkouts(data);
+          this.deleteWorkoutExerciseSets();
+        },
+        error => {
+          console.log(error);
+        });   
+  }
+
+  private deleteDayWhenNoWorkouts(workouts: Workout[]) {
+    if (workouts == null) {
+      const dateSearch = this.convert(this.startDate.toString());
+      const dayArray = this.allDays.filter(f => f.date == dateSearch);
+      this.dayService.delete(dayArray[0].id)
+        .subscribe(
+          response => {
+            this.retrieveAllDays();
+          },
+          error => {
+            console.log(error);
+          });
+    }
+  }
+
+  private deleteWorkoutExerciseSets() {
+    let array = this.exerciseSets ? this.exerciseSets.filter(x => x.workout !== this.currentWorkout) : [];
+    for (let index = 0; index < array.length; index++) {
+      this.exerciseSetService.delete(array[index].id!)
+      .subscribe(
+        response => {
+          this.searchForExerciseSets();
+        },
+        error => {
+          console.log(error);
+        });
+    }
+  }
+
+  private updateWorkoutsForCurrentDay() {
     this.workoutService.findByDate(this.convert(this.startDate.toString()))
       .subscribe(
         data => {
@@ -156,32 +200,22 @@ export class DiaryComponent implements OnInit {
         });   
   }
 
-  checkDayExist(workouts: Workout[]) {
+  private checkDayExist(workouts: Workout[]) {
     const dateSearch = this.convert(this.startDate.toString());
     if (workouts) {
       if (this.allDays){
         const dayArray = this.allDays.filter(f => f.date == dateSearch);
-        this.updateCurrentDay(dayArray[0], workouts);
+        if (dayArray.length > 0) {
+          this.updateCurrentDay(dayArray[0], workouts);
+        }
+        else {
+          this.createNewDay(dateSearch, workouts);
+        }
       }  
       else {
         this.createNewDay(dateSearch, workouts);
       }
     } 
-
-    if (workouts == null) {
-      console.log(this.allDays);
-      if (this.allDays){
-        const dayArray = this.allDays.filter(f => f.date == dateSearch);
-        this.dayService.delete(dayArray[0].id)
-            .subscribe(
-              response => {
-                console.log(response);
-              },
-              error => {
-                console.log(error);
-              });
-      } 
-    }
   }
 
   private updateCurrentDay(updateDay: Day, workouts: Workout[]) {
@@ -235,6 +269,10 @@ export class DiaryComponent implements OnInit {
     });
   }
 
+  private getExerciseSet(id?: string) {
+    return this.exerciseSets ? this.exerciseSets.filter(x => x.id === id) : "";
+  }
+
   deleteExerciseSet(id?: any) {
     this.exerciseSetService.delete(id!)
       .subscribe(
@@ -246,12 +284,5 @@ export class DiaryComponent implements OnInit {
         });
   }
 
-  getExerciseSet(id?: string) {
-    if (this.exerciseSets) {
-      return this.exerciseSets.filter(x => x.id === id);
-    }
-    else{
-      return "";
-    }
-  }
+  
 }

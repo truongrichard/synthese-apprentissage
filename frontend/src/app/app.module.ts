@@ -49,18 +49,12 @@ import { MatTreeModule } from '@angular/material/tree';
 
 import { CommonModule } from '@angular/common'; 
 
-
 import { WorkoutAddComponent } from './components/workout-add/workout-add.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ExerciseSetAddComponent } from './components/exercise-set-add/exercise-set-add.component';
-
-
-import { ControlMessagesComponent } from './validation/control-messages.component';
 import { ImageExerciseAddComponent } from './components/image-exercise-add/image-exercise-add.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LeftMenuComponent } from './components/left-menu/left-menu.component';
-
-
 import { SidenavService } from './services/sidenav.service';
 import { MeasurementListComponent } from './components/measurement-list/measurement-list.component';
 import { MeasurementAddComponent } from './components/measurement-add/measurement-add.component';
@@ -73,14 +67,9 @@ import { ChartsModule } from 'ng2-charts';
     ExerciseAddComponent,
     ExerciseListComponent,
     DiaryComponent,
-
     WorkoutAddComponent,
     ExerciseSetAddComponent,
-
-    ControlMessagesComponent,
-
     ImageExerciseAddComponent,
-
     HeaderComponent,
     LeftMenuComponent,
     MeasurementListComponent,

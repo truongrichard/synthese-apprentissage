@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ImageExerciseService } from 'src/app/services/imageExercise.service';
 import { ImageExercise } from 'src/app/models/imageExercise.model';
@@ -42,8 +42,6 @@ export class ImageExerciseAddComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.selectedFile);
-    console.log(this.data.exerciseId);
     this.uploadImageExercise();
     this.dialogRef.close();
   }
@@ -55,7 +53,6 @@ export class ImageExerciseAddComponent implements OnInit {
     this.imageExerciseService.create(this.data.exerciseId, uploadImageData).subscribe(
       data => {
         this.imageExercise = data;
-        console.log(data);
       },
       error => {
         console.log(error);

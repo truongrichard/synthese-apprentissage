@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Validators } from '@angular/forms';
 
 import { ExerciseService } from 'src/app/services/exercise.service';
@@ -37,22 +37,14 @@ export class ExerciseSetAddComponent implements OnInit {
   }
 
   onSubmit() {
-    if (isNaN(this.data.id)) {
-      console.log(this.exerciseSetForm.value);
-      this.newExerciseSet();
-      this.dialogRef.close();
-    } else {
-      console.log(this.exerciseSetForm.value);
-      this.newExerciseSet();
-      this.dialogRef.close();
-    }
+    this.newExerciseSet();
+    this.dialogRef.close();
   }
 
   private newExerciseSet() {
     this.exerciseSetService.create(this.exerciseSetForm.value)
       .subscribe(
         response => {
-          console.log(response);
         },
         error => {
           console.log(error);

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Validators } from '@angular/forms';
 
 import { MeasurementService } from 'src/app/services/measurement.service';
@@ -37,22 +37,14 @@ export class MeasurementAddComponent implements OnInit {
   }
 
   onSubmit() {
-    if (isNaN(this.data.id)) {
-      //console.log(this.measurementForm.value);
-      this.newMeasurement();
-      this.dialogRef.close();
-    } else {
-      //console.log(this.measurementForm.value);
-      this.newMeasurement();
-      this.dialogRef.close();
-    }
+    this.newMeasurement();
+    this.dialogRef.close();
   }
 
   private newMeasurement() {
     this.measurementService.create(this.measurementForm.value)
       .subscribe(
         response => {
-          //console.log(response);
         },
         error => {
           console.log(error);

@@ -136,6 +136,7 @@ export class ExerciseListComponent implements OnInit {
       .subscribe(
         response => {
           this.clearCurrenExercise();
+          this.retrieveExercises();
         },
         error => {
           console.log(error);
