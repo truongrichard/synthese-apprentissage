@@ -24,6 +24,10 @@ public class ExerciseSet {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public int getRepetitions() {
         return repetitions;
     }

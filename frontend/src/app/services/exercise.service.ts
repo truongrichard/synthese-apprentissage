@@ -28,10 +28,6 @@ export class ExerciseService {
     return this.http.delete(baseUrl + "/delete/" + id);
   }
 
-  deleteAll(): Observable<any> {
-    return this.http.delete(baseUrl + "/deleteAll");
-  }
-
   findByTitle(title: any): Observable<Exercise[]> {
     return this.http.get<Exercise[]>(baseUrl + "/getAll?title=" + title);
   }

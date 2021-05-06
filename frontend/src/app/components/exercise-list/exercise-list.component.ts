@@ -132,6 +132,21 @@ export class ExerciseListComponent implements OnInit {
   }
 
   deleteExercise() {
+    this.deleteImage();
+  }
+
+  private deleteImage() {
+    this.imageExerciseService.delete(this.currentExercise!.id)
+      .subscribe(
+        response => {
+          this.deleteExerciseAfterImage();
+        },
+        error => {
+          console.log(error);
+      });
+  }
+
+  private deleteExerciseAfterImage() {
     this.exerciseService.delete(this.currentExercise!.id)
       .subscribe(
         response => {

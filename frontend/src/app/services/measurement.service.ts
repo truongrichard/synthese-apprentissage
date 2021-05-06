@@ -28,10 +28,6 @@ export class MeasurementService {
     return this.http.delete(baseUrl + "/delete/" + id);
   }
 
-  deleteAll(): Observable<any> {
-    return this.http.delete(baseUrl + "/deleteAll");
-  }
-
   findByDate(date: any): Observable<Measurement[]> {
     return this.http.get<Measurement[]>(baseUrl + "/getAll?date=" + date);
   }

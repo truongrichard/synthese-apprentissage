@@ -28,10 +28,10 @@ export class ExerciseSetAddComponent implements OnInit {
   ngOnInit() {
     this.exerciseSetForm = this._formBuilder.group({
       id: [this.data.set.id ],
-      repetitions: [ this.data.set.repetitions, [Validators.required]],
-      weight: [ this.data.set.weight, [Validators.required]],
-      time: [ (this.data.set.time == null ? "00:00:00" : this.data.set.time), [Validators.required]],
-      distance: [ this.data.set.distance, [Validators.required]],
+      repetitions: [ this.data.set.repetitions ],
+      weight: [ this.data.set.weight ],
+      time: [ (this.data.set.time == null ? "00:00:00" : this.data.set.time) ],
+      distance: [ this.data.set.distance ],
       workout: [ this.data.workout ],
     });
   }

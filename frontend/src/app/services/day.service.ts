@@ -28,10 +28,6 @@ export class DayService {
     return this.http.delete(baseUrl + "/delete/" + id);
   }
 
-  deleteAll(): Observable<any> {
-    return this.http.delete(baseUrl + "/deleteAll");
-  }
-
   findByDate(date: any): Observable<Day[]> {
     return this.http.get<Day[]>(baseUrl + "/getAll?date=" + date);
   }

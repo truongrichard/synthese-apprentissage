@@ -19,4 +19,8 @@ export class ImageExerciseService {
   create(id: any, data: any): Observable<any> {
     return this.http.post(baseUrl + "/upload/" + id, data);
   }
+
+  delete(id: any): Observable<ImageExercise> {
+    return this.http.delete(baseUrl + "/delete/" + id);
+  }
 }
