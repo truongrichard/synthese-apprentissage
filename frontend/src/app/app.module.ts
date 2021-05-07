@@ -10,6 +10,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExerciseAddComponent } from './components/exercise-add/exercise-add.component';
 import { ExerciseListComponent } from './components/exercise-list/exercise-list.component';
 import { DiaryComponent } from './components/diary/diary.component';
+import { WorkoutAddComponent } from './components/workout-add/workout-add.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ExerciseSetAddComponent } from './components/exercise-set-add/exercise-set-add.component';
+import { ImageExerciseAddComponent } from './components/image-exercise-add/image-exercise-add.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LeftMenuComponent } from './components/left-menu/left-menu.component';
+import { SidenavService } from './services/sidenav.service';
+import { MeasurementListComponent } from './components/measurement-list/measurement-list.component';
+import { MeasurementAddComponent } from './components/measurement-add/measurement-add.component';
+
+import { CommonModule } from '@angular/common'; 
+import { ChartsModule } from 'ng2-charts';
 
 // material.module.ts
 import { MatNativeDateModule } from '@angular/material/core';
@@ -47,20 +59,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 
-import { CommonModule } from '@angular/common'; 
-
-import { WorkoutAddComponent } from './components/workout-add/workout-add.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ExerciseSetAddComponent } from './components/exercise-set-add/exercise-set-add.component';
-import { ImageExerciseAddComponent } from './components/image-exercise-add/image-exercise-add.component';
-import { HeaderComponent } from './components/header/header.component';
-import { LeftMenuComponent } from './components/left-menu/left-menu.component';
-import { SidenavService } from './services/sidenav.service';
-import { MeasurementListComponent } from './components/measurement-list/measurement-list.component';
-import { MeasurementAddComponent } from './components/measurement-add/measurement-add.component';
-
-import { ChartsModule } from 'ng2-charts';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,43 +80,42 @@ import { ChartsModule } from 'ng2-charts';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ChartsModule,       
-        MatAutocompleteModule,
-        MatBadgeModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatChipsModule,
-        MatStepperModule,
-        MatDatepickerModule,
-        MatDialogModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatGridListModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
-        MatMenuModule,
-        MatPaginatorModule,
-        MatProgressBarModule,
-        MatProgressSpinnerModule,
-        MatRadioModule,
-        MatRippleModule,
-        MatSelectModule,
-        MatSidenavModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatSnackBarModule,
-        MatSortModule,
-        MatTableModule,
-        MatTabsModule,
-        MatToolbarModule,
-        MatTooltipModule,
-        MatTreeModule,
-        MatNativeDateModule,
-
-        CommonModule
+    ChartsModule,   
+    MatAutocompleteModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatTreeModule,
+    MatNativeDateModule,
+    CommonModule
     ],
   providers: [SidenavService],
   bootstrap: [AppComponent]

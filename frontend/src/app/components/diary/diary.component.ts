@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Day } from 'src/app/models/day.model';
 import { Workout } from 'src/app/models/workout.model';
 import { ExerciseSet } from 'src/app/models/exerciseSet.model';
@@ -96,7 +96,6 @@ export class DiaryComponent implements OnInit {
         error => {
           console.log(error);
         });
-
   }  
 
   onDateChanged() {
@@ -137,7 +136,7 @@ export class DiaryComponent implements OnInit {
       .subscribe(
         response => {
           this.clearCurrentWorkout();
-          this.updateWorkoutsForCurrentDayV2();
+          this.updateDayForDeletedWorkout();
           this.searchForWorkouts();
           this.retrieveAllDays();
         },
@@ -146,7 +145,7 @@ export class DiaryComponent implements OnInit {
         });
   }
 
-  private updateWorkoutsForCurrentDayV2() {
+  private updateDayForDeletedWorkout() {
     this.workoutService.findByDate(this.convert(this.startDate.toString()))
       .subscribe(
         data => {
