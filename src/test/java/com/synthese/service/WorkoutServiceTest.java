@@ -1,6 +1,5 @@
 package com.synthese.service;
 
-import com.synthese.model.Measurement;
 import com.synthese.model.Workout;
 import com.synthese.repository.WorkoutRepository;
 import org.junit.jupiter.api.Assertions;

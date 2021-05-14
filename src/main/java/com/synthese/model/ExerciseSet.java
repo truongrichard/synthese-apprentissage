@@ -3,8 +3,6 @@ package com.synthese.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Duration;
-
 @Document(collection = "exercises_sets")
 public class ExerciseSet {
     @Id
@@ -15,10 +13,6 @@ public class ExerciseSet {
     private String time;
     private double distance;
     private Workout workout;
-
-    public ExerciseSet() {
-
-    }
 
     public String getId() {
         return id;

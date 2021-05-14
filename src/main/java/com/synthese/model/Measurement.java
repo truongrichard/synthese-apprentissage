@@ -15,10 +15,6 @@ public class Measurement {
     private LocalDate date;
     private Category category;
 
-    public Measurement() {
-
-    }
-
     public String getId() {
         return id;
     }

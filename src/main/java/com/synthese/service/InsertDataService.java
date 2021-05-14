@@ -1,14 +1,10 @@
 package com.synthese.service;
 
-
 import com.synthese.model.Exercise;
 import com.synthese.repository.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 @Component
 public class InsertDataService {

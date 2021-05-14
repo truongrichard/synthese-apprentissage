@@ -13,10 +13,6 @@ public class ImageExercise {
     private byte[] picByte;
     private Exercise exercise;
 
-    public ImageExercise() {
-
-    }
-
     public ImageExercise(String name, String type, byte[] picByte) {
         this.name = name;
         this.type = type;

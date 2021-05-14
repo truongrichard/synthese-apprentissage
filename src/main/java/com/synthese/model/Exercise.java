@@ -15,10 +15,6 @@ public class Exercise {
   private BodyPart bodyPart;
   private Category category;
 
-  public Exercise() {
-
-  }
-
   public String getId() {
     return id;
   }

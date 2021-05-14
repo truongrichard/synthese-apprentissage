@@ -14,10 +14,6 @@ public class Day {
     private List<Workout> workouts;
     private List<Measurement> measurements;
 
-    public Day() {
-
-    }
-
     public String getId() {
         return id;
     }

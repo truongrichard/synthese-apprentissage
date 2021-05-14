@@ -4,7 +4,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Document(collection = "workouts")
 public class Workout {
@@ -15,10 +14,6 @@ public class Workout {
   private String description;
   private LocalDate date;
   private Exercise exercise;
-
-  public Workout() {
-
-  }
 
   public String getId() {
     return id;

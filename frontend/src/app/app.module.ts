@@ -23,7 +23,6 @@ import { MeasurementAddComponent } from './components/measurement-add/measuremen
 import { CommonModule } from '@angular/common'; 
 import { ChartsModule } from 'ng2-charts';
 
-// material.module.ts
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';

@@ -11,7 +11,6 @@ import { onMainContentChange } from './animations/animations';
 export class AppComponent {
   title = 'Angular 11 Crud';
 
-  // SIDENAV
   public onSideNavChange!: boolean;
 
   constructor(private _sidenavService: SidenavService) {
